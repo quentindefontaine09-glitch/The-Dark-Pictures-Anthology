@@ -92,3 +92,69 @@ function choose(choice) {
   playScene();
 }
 
+function playConrad() {
+  const c = document.getElementById("content");
+
+  switch (state.scene) {
+
+    case "conrad_intro":
+      c.innerHTML = `
+        <p><em>Le Conservateur :</em><br>
+        "Conrad… L’arrogance cache parfois la peur."</p>
+        <button onclick="go('conrad_epave')">Continuer</button>
+      `;
+      break;
+
+    case "conrad_epave":
+      c.innerHTML = `
+        <p>L’épave craque sous les vagues. Une ombre bouge derrière toi.</p>
+        <button onclick="choiceConrad('observer')">Observer</button>
+        <button onclick="choiceConrad('fuir')">Fuir</button>
+      `;
+      break;
+
+    case "conrad_intrus":
+      c.innerHTML = `
+        <p>Des voix. Des pas. Les pirates sont déjà là.</p>
+        <button onclick="qteConrad()">Se cacher</button>
+      `;
+      break;
+
+    case "conrad_mort":
+      state.alive = false;
+      saveGame();
+      c.innerHTML = `
+        <h2>CONRAD EST MORT</h2>
+        <p>Le Conservateur ferme son carnet.</p>
+      `;
+      break;
+  }
+}
+
+function go(scene) {
+  state.scene = scene;
+  saveGame();
+  playScene();
+}
+
+function choiceConrad(choice) {
+  if (choice === "observer") {
+    state.flags.hallucination = true;
+    state.scene = "conrad_intrus";
+  } else {
+    state.scene = "conrad_intrus";
+  }
+  saveGame();
+  playScene();
+}
+
+function qteConrad() {
+  const success = Math.random() > (state.difficulty === "hard" ? 0.7 : 0.4);
+  if (!success) {
+    state.scene = "conrad_mort";
+  } else {
+    state.scene = "conrad_suite";
+  }
+  saveGame();
+  playScene();
+}
