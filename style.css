@@ -1,1 +1,42 @@
+body {
+  margin: 0;
+  background: black;
+  color: #e0e0e0;
+  font-family: "Georgia", serif;
+}
+
+#game {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+
+#title {
+  text-align: center;
+  letter-spacing: 5px;
+}
+
+#subtitle {
+  text-align: center;
+  color: #777;
+}
+
+button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 12px;
+  background: #111;
+  color: white;
+  border: 1px solid #444;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #300;
+}
+
+.choice {
+  margin-top: 15px;
+}
 
