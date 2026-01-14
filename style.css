@@ -1,19 +1,19 @@
 body {
-  margin: 0;
-  background: black;
+  background: radial-gradient(#000, #050505);
   color: #e0e0e0;
-  font-family: "Georgia", serif;
+  font-family: Georgia, serif;
+  margin: 0;
 }
 
 #game {
-  max-width: 800px;
+  max-width: 900px;
   margin: auto;
   padding: 20px;
 }
 
-#title {
+h1 {
   text-align: center;
-  letter-spacing: 5px;
+  letter-spacing: 6px;
 }
 
 #subtitle {
@@ -22,10 +22,9 @@ body {
 }
 
 button {
-  display: block;
   width: 100%;
-  margin: 10px 0;
-  padding: 12px;
+  padding: 14px;
+  margin-top: 10px;
   background: #111;
   color: white;
   border: 1px solid #444;
@@ -40,3 +39,6 @@ button:hover {
   margin-top: 15px;
 }
 
+p {
+  line-height: 1.6;
+}
