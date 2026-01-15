@@ -316,7 +316,11 @@ function playConrad() {
       <p class="small">
         Le Conservateur tourne une page.
       </p>
-        /* ===== CAPTURE PAR LES PIRATES ===== */
+      <button onclick="go('capture')">Continuer</button>
+   `);
+    return;
+  }
+  /* ===== CAPTURE PAR LES PIRATES ===== */
   if (state.scene === "capture") {
     show(`
       <h2>Le Cargo</h2>
@@ -464,9 +468,6 @@ function playConrad() {
       <button onclick="go('rejoindre_famille')">
         Rejoindre les autres
       </button>
-    `);
-    return;
-  }
 
       <button onclick="go('menu')">Retour menu (temporaire)</button>
     `);
