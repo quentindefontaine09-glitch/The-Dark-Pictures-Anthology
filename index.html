@@ -317,10 +317,123 @@ function playConrad() {
       <p class="small">
         Le Conservateur tourne une page.
       </p>
-      <button onclick="go('capture')">Continuer</button>
+      <button onclick="go('conservateur')">Continuer</button>
       `);
     return;
   }
+
+  /* ================= CONSERVATEUR ================= */
+  if (state.scene === "conservateur") {
+    show(`
+      <h2>Le Conservateur</h2>
+      <p>
+        « Nous avons déjà tourné quelques pages…  
+        Mais parfois, le plus dangereux n’est pas ce que l’on voit.
+        C’est ce que l’on croit voir. »
+      </p>
+      <button onclick="go('approche_bateau')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ================= APPROCHE DU BATEAU ================= */
+  if (state.scene === "approche_bateau") {
+    show(`
+      <p>
+        Un bruit de moteur brise le calme.
+      </p>
+      <p>
+        Un autre bateau approche. Trop vite. Trop près.
+      </p>
+      <p>
+        Fliss se crispe.
+      </p>
+      <p><em>
+        « Conrad… reste calme. »
+      </em></p>
+
+      <button onclick="go('provoquer')">Provoquer les inconnus</button>
+      <button onclick="go('se_taire')">Se taire</button>
+    `);
+    return;
+  }
+
+  /* ================= CHOIX ================= */
+  if (state.scene === "provoquer") {
+    state.flags.provocateur = true;
+    show(`
+      <p>
+        Conrad sourit, ironique.
+      </p>
+      <p>
+        Mauvaise idée.
+      </p>
+      <button onclick="go('menace')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "se_taire") {
+    state.flags.calme = true;
+    show(`
+      <p>
+        Le silence pèse.
+      </p>
+      <p>
+        Les hommes armés montent à bord.
+      </p>
+      <button onclick="go('menace')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ================= MENACE ================= */
+  if (state.scene === "menace") {
+    show(`
+      <p>
+        Un revolver est pointé sur Alex.
+      </p>
+      <p>
+        Conrad sent son cœur battre à tout rompre.
+      </p>
+      <button onclick="go('qte_fuite')">
+        Tenter de s’enfuir
+      </button>
+    `);
+    return;
+  }
+
+  /* ================= QTE ================= */
+  if (state.scene === "qte_fuite") {
+    qte("fuite_reussie", "fuite_ratee", 3000);
+    return;
+  }
+
+  if (state.scene === "fuite_ratee") {
+    die(`
+      Conrad trébuche.
+      Un coup de feu retentit.
+      Sa bravade lui coûte la vie.
+    `);
+    return;
+  }
+
+  if (state.scene === "fuite_reussie") {
+    show(`
+      <p>
+        Conrad est capturé juste avant d'avoir pu s'échapper.
+      </p>
+      <p>
+        Le bateau s’éloigne.
+      </p>
+      <p class="small">
+        Survivre… pour l’instant.
+      </p>
+      <button onclick="go('capture')">Continuer</button>
+    `);
+    return;
+  }
+
   /* ===== CAPTURE PAR LES PIRATES ===== */
   if (state.scene === "capture") {
     show(`
