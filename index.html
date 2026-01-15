@@ -110,11 +110,11 @@ function startCharacter(char) {
 // =====================
 // QTE SOURIS
 // =====================
-function qte(success, fail, time = 5200) {
+function qte(success, fail, time = 6200) {
   qteSound.currentTime = 0;
   qteSound.play();
 
-  const size = 40;
+  const size = 80;
   const x = Math.random() * (window.innerWidth - size);
   const y = Math.random() * (window.innerHeight - size);
 
