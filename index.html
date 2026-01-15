@@ -322,30 +322,182 @@ function playConrad() {
   }
 }
 
-
 function playAndrew() {
-  show(`
-    <h2>Andrew – Little Hope</h2>
-    <p>L’histoire sera ajoutée ici.</p>
-    <button onclick="state.scene='menu';menu()">Menu</button>
-  `);
+
+  if (state.scene === "intro") {
+    show(`
+      <h2>Le Conservateur</h2>
+      <p>
+        « Certains hommes portent le poids du passé…
+        même quand il n’existe que dans leur esprit. »
+      </p>
+      <button onclick="go('bus_crash')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "bus_crash") {
+    show(`
+      <p>
+        Le bus gît sur le bas-côté.
+      </p>
+      <p>
+        Le brouillard enveloppe Little Hope.
+      </p>
+      <p>
+        Andrew est seul.
+      </p>
+      <button onclick="go('cri_lointain')">Explorer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "cri_lointain") {
+    show(`
+      <p>
+        Un cri résonne dans la brume.
+      </p>
+      <button onclick="go('qte_panique')">Courir</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_panique") {
+    qte("calme", "panique", 1000);
+    return;
+  }
+
+  if (state.scene === "panique") {
+    die(`
+      Andrew fuit droit dans les flammes du passé.
+      Certaines culpabilités ne laissent aucune échappatoire.
+    `);
+    return;
+  }
+
+  if (state.scene === "calme") {
+    show(`
+      <p>
+        Andrew respire.
+      </p>
+      <p>
+        Une silhouette l’observe.
+      </p>
+      <button onclick="go('menu')">Retour menu</button>
+    `);
+    return;
+  }
 }
 
+
 function playRachel() {
-  show(`
-    <h2>Rachel – House of Ashes</h2>
-    <p>L’histoire sera ajoutée ici.</p>
-    <button onclick="state.scene='menu';menu()">Menu</button>
-  `);
+
+  if (state.scene === "intro") {
+    show(`
+      <h2>Le Conservateur</h2>
+      <p>
+        « La guerre révèle ce que l’homme a de plus sombre…
+        et ce qui rampe sous la terre. »
+      </p>
+      <button onclick="go('chute')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "chute") {
+    show(`
+      <p>
+        Le sol s’effondre.
+      </p>
+      <p>
+        Rachel tombe dans l’obscurité.
+      </p>
+      <button onclick="go('qte_atterrissage')">Se protéger</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_atterrissage") {
+    qte("vivante", "mort", 800);
+    return;
+  }
+
+  if (state.scene === "mort") {
+    die(`
+      L’impact est fatal.
+      Même les soldats d’élite tombent.
+    `);
+    return;
+  }
+
+  if (state.scene === "vivante") {
+    show(`
+      <p>
+        Rachel se relève.
+      </p>
+      <p>
+        Des bruits inhumains résonnent.
+      </p>
+      <button onclick="go('menu')">Retour menu</button>
+    `);
+    return;
+  }
 }
 
 function playKate() {
-  show(`
-    <h2>Kate – The Devil In Me</h2>
-    <p>L’histoire sera ajoutée ici.</p>
-    <button onclick="state.scene='menu';menu()">Menu</button>
-  `);
+
+  if (state.scene === "intro") {
+    show(`
+      <h2>Le Conservateur</h2>
+      <p>
+        « Certains monstres portent un masque…
+        d’autres construisent des hôtels. »
+      </p>
+      <button onclick="go('hotel')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "hotel") {
+    show(`
+      <p>
+        Le hall est silencieux.
+      </p>
+      <p>
+        Kate sent qu’elle est observée.
+      </p>
+      <button onclick="go('qte_cachette')">Se cacher</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_cachette") {
+    qte("cachee", "attrapee", 900);
+    return;
+  }
+
+  if (state.scene === "attrapee") {
+    die(`
+      Le piège se referme.
+      Le tueur ne rate jamais sa proie.
+    `);
+    return;
+  }
+
+  if (state.scene === "cachee") {
+    show(`
+      <p>
+        Le danger passe.
+      </p>
+      <p>
+        Pour l’instant.
+      </p>
+      <button onclick="go('menu')">Retour menu</button>
+    `);
+    return;
+  }
 }
+
 
 // =====================
 menu();
