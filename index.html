@@ -115,8 +115,8 @@ function qte(success, fail, time = 6200) {
   qteSound.play();
 
   const size = 80;
-  const x = Math.random() * (window.innerWidth - size);
-  const y = Math.random() * (window.innerHeight - size);
+  const x = (window.innerWidth * 0.25) + Math.random() * (window.innerWidth * 0,5 - size);
+  const y = (window.innerWidth * 0.25) + Math.random() * (window.innerHeight * 0,5 - size);
 
   show(`
     <p>AGIS VITE</p>
