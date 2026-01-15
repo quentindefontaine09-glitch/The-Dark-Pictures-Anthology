@@ -110,7 +110,7 @@ function startCharacter(char) {
 // =====================
 // QTE SOURIS
 // =====================
-function qte(success, fail, time = 4200) {
+function qte(success, fail, time = 5200) {
   qteSound.currentTime = 0;
   qteSound.play();
 
@@ -277,7 +277,7 @@ function playConrad() {
 
   /* ===== QTE ===== */
   if (state.scene === "qte_equilibre") {
-    qte("reussi_equilibre", "rate_equilibre", 1000);
+    qte("reussi_equilibre", "rate_equilibre", 5000);
     return;
   }
 
@@ -422,7 +422,7 @@ function playConrad() {
   }
 
   if (state.scene === "qte_intervention") {
-    qte("intervention_reussie", "intervention_ratee", 900);
+    qte("intervention_reussie", "intervention_ratee", 5000);
     return;
   }
 
@@ -516,7 +516,7 @@ function playAndrew() {
   }
 
   if (state.scene === "qte_panique") {
-    qte("calme", "panique", 1000);
+    qte("calme", "panique", 5000);
     return;
   }
 
@@ -571,7 +571,7 @@ function playRachel() {
   }
 
   if (state.scene === "qte_atterrissage") {
-    qte("vivante", "mort", 800);
+    qte("vivante", "mort", 5000);
     return;
   }
 
@@ -625,7 +625,7 @@ function playKate() {
   }
 
   if (state.scene === "qte_cachette") {
-    qte("cachee", "attrapee", 900);
+    qte("cachee", "attrapee", 5000);
     return;
   }
 
