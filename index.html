@@ -201,9 +201,9 @@ function playConrad() {
         un sourire arrogant aux lèvres.
       </p>
       <p>
-        Julia rit quelque part derrière lui.  
-        Fliss tient la barre.  
-        Alex vérifie son équipement de plongée.
+        Julia, sa soeur rit quelque part derrière lui.  
+        Fliss, la capitaine du petit bateau de plongé tient la barre.  
+        Alex, le petit copain de Julia vérifie son équipement de plongée.
       </p>
       <p>
         Tout semble… normal.
@@ -225,10 +225,10 @@ function playConrad() {
     state.flags.taquin = true;
     show(`
       <p>
-        « Sérieusement Julia, tu comptes plonger avec ÇA ? »
+        « Sérieusement Julia, tu comptes plonger avec ÇA ? C'est aussi safe que d'aller dans un temple maudit en Irak en 2003 ! »
       </p>
       <p>
-        Elle lève les yeux au ciel, mais sourit.
+        Elle lève les yeux au ciel, mais sourit. "Tu peux arrêter de te comporter comme ça ? Va plutôt draguer Fliss comme tu le fait si... Bien ?
       </p>
       <p class="small">
         Votre légèreté masque une certaine nervosité.
@@ -246,7 +246,7 @@ function playConrad() {
         Fliss vous lance un regard méfiant.
       </p>
       <p>
-        « Ce coin est dangereux. On ne traîne pas ici. »
+        « Ce coin est dangereux. On n'essai même pas de me draguer ici. »
       </p>
       <p>
         Pour une fois, Conrad se tait.
@@ -263,7 +263,7 @@ function playConrad() {
         Sous la surface, quelque chose bouge.
       </p>
       <p>
-        Une ombre… trop grande pour être un poisson.
+        Une ombre… trop grande pour être un simple poisson.
       </p>
       <p>
         Conrad sent un frisson lui parcourir l’échine.
@@ -298,8 +298,8 @@ function playConrad() {
   if (state.scene === "rate_equilibre") {
     die(`
       Conrad bascule par-dessus bord.
-      Personne ne le voit sombrer.
-      Le silence de l’océan devient sa tombe.
+      Personne ne le voit sombrer tandis qu'un requin étrange se jette sur lui.
+      Le silence de l’océan pourpre de sang devient sa tombe.
     `);
     return;
   }
@@ -343,13 +343,13 @@ function playConrad() {
         Un bruit de moteur brise le calme.
       </p>
       <p>
-        Un autre bateau approche. Trop vite. Trop près.
+        Un autre bateau approche. Trop vite. Trop près. Les deux bateau se heurtent !
       </p>
       <p>
         Fliss se crispe.
       </p>
       <p><em>
-        « Conrad… reste calme. »
+        « Conrad… reste calme. C'est pas des gardes cotes. »
       </em></p>
 
       <button onclick="go('provoquer')">Provoquer les inconnus</button>
@@ -363,7 +363,7 @@ function playConrad() {
     state.flags.provocateur = true;
     show(`
       <p>
-        Conrad sourit, ironique.
+        Conrad sourit, ironique. Hé ! Vous êtes complètement bourrés ou quoi ?
       </p>
       <p>
         Mauvaise idée.
@@ -380,7 +380,7 @@ function playConrad() {
         Le silence pèse.
       </p>
       <p>
-        Les hommes armés montent à bord.
+        Trois hommes armés montent à bord.
       </p>
       <button onclick="go('menace')">Continuer</button>
     `);
@@ -391,10 +391,10 @@ function playConrad() {
   if (state.scene === "menace") {
     show(`
       <p>
-        Un revolver est pointé sur Alex.
+        Olson, le capitaine des trois, pointe un revolver sur Alex.
       </p>
       <p>
-        Conrad sent son cœur battre à tout rompre.
+        Conrad sent son cœur battre à tout rompre. "Putain ! qu'est-ce que vous faites ?!"
       </p>
       <button onclick="go('qte_fuite')">
         Tenter de s’enfuir
@@ -422,6 +422,8 @@ function playConrad() {
     show(`
       <p>
         Conrad est capturé juste avant d'avoir pu s'échapper.
+        Olson - "Reste avec les autres ! Junior, va l'attacher avec les autres."
+        Junior, le plus jeunes des trois pirates, emmène Conrad et Alex. Pendant ce temps, Danny, le plus modéré des trois pirates s'occupe de Julia et Fliss
       </p>
       <p>
         Le bateau s’éloigne.
@@ -467,13 +469,14 @@ function playConrad() {
     state.flags.provoquePirates = true;
     show(`
       <p>
-        « Sérieusement ? Vous volez des touristes maintenant ? »
+        « Sérieusement ? Vous volez des touristes ? Vous pouvez pas vous trouver un job, comme tout le monde ?
+        Je vous préviens, je suis citoyen américain ! Trump va vous balancer la bombe atomique en pleine gueule ! »
       </p>
       <p>
-        Le pirate le frappe sans hésiter.
+        Junior le frappe sans hésiter.
       </p>
       <p class="small">
-        Mauvais souvenir. Mauvais choix.
+        Mauvais souvenir. Mauvais choix. "Ta gueule !"
       </p>
       <button onclick="go('menace_arme')">Continuer</button>
     `);
@@ -488,8 +491,8 @@ function playConrad() {
         Conrad baisse les yeux.
       </p>
       <p>
-        Il repère les mouvements, les armes,
-        la passerelle menant au pont inférieur.
+        Il repère les mouvements, la seule arme des pirates : le pistolet d'Olson,
+        la passerelle menant au pont inférieur. Julia semble au bord des larmes pendant que Fliss garde son sang froid.
       </p>
       <button onclick="go('menace_arme')">Continuer</button>
     `);
@@ -501,6 +504,7 @@ function playConrad() {
     show(`
       <p>
         Le chef pirate appuie le canon de son arme sur la tempe d’Alex.
+        Olson - "Si vous continuer, je tire !"
       </p>
       <p>
         Conrad sent la panique monter.
@@ -554,10 +558,13 @@ function playConrad() {
     state.flags.heros = true;
     show(`
       <p>
-        Conrad désarme le pirate.
+        Conrad désarme le pirate. Mais Junior se jette sur Conrad et le désarme à son tour.
       </p>
       <p>
-        Le chaos éclate.
+        Le chaos éclate jusqu'à ce que Danny remonte de la cale du bateau de Fliss avec un papier
+        Danny - "Olson ! J'ai trouver un vieux papier avec des coordonnées et un truc marqué "l'or de Manchouries" caché sous le plancher de la cale !
+        On doit y aller !"
+        Fliss semble surprise, elle n'avait jamais vu ce papier avant.
       </p>
       <button onclick="go('cargo_exploration')">Continuer</button>
     `);
@@ -568,11 +575,13 @@ function playConrad() {
   if (state.scene === "cargo_exploration") {
     show(`
       <p>
+        Le groupe dirigé par Olson guida le bateau de Fliss jusqu'au lieu des coordonnées du papier et trouva un immnse cargo abandonné de la seconde guerre.
+        Olson ordonne à Danny et Junior de faire monter tout le monde dans le cargo.
         Les couloirs du cargo sont sombres.
       </p>
       <p>
         Des bruits résonnent…
-        ou peut-être est-ce seulement dans sa tête.
+        ou peut-être est-ce seulement dans la tête de Conrad ?
       </p>
 
       <button onclick="go('suivre_bruit')">
@@ -606,13 +615,16 @@ function playAndrew() {
   if (state.scene === "bus_crash") {
     show(`
       <p>
-        Le bus gît sur le bas-côté.
+        Le bus gît sur le bas-côté, Andrew se réveille sans aucun souvenir, complètement sonné.
       </p>
       <p>
-        Le brouillard enveloppe Little Hope.
+        Le brouillard enveloppe la ville abandonnée de Little Hope.
       </p>
       <p>
-        Andrew est seul.
+        Andrew voit deux personnes qui viennent vers lui.
+        John - "Andrew ! Tu vas bien ?"
+        Taylor - "Andrew ! Le prof et moi on cherche Angela et Daniel. Tu sais où ils sont ?
+                  Le bus s'est renversé et tout le monnde a sisparu ! Même le chauffeur !"
       </p>
       <button onclick="go('cri_lointain')">Explorer</button>
     `);
@@ -622,7 +634,7 @@ function playAndrew() {
   if (state.scene === "cri_lointain") {
     show(`
       <p>
-        Un cri résonne dans la brume.
+        Un cri résonne dans la brume. Taylor et John tournent sur eux-mêmes, cherchant d'où ça provient.
       </p>
       <button onclick="go('qte_panique')">Courir</button>
     `);
@@ -636,8 +648,8 @@ function playAndrew() {
 
   if (state.scene === "panique") {
     die(`
-      Andrew fuit droit dans les flammes du passé.
-      Certaines culpabilités ne laissent aucune échappatoire.
+      Andrew fuit droit dans la forêt, laissant John et Taylor hurlants derrière.
+      Certaines culpabilités ne laissent aucune échappatoire. Andrew se perdra dans l'immense forêt entourant la ville.
     `);
     return;
   }
