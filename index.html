@@ -186,12 +186,15 @@ function play() {
 
     // ================= INTRO =================
     case "intro":
-      show(`
-        <p><em>Le Conservateur :</em><br>
-        "Certains masquent leur peur derrière l’humour."</p>
-        <button onclick="next('plongee')">Continuer</button>
-      `);
-    break;
+  show(`
+    <p><em>Le Conservateur :</em><br>
+    "Conrad… Certains se cachent derrière l’humour,
+    d’autres derrière le courage. Peu survivent sans payer le prix."</p>
+
+    <button onclick="next('plongee')">Continuer</button>
+  `);
+break;
+
 
     // ================= PLONGÉE =================
     case "plongee":
