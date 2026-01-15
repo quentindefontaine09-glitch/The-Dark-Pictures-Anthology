@@ -289,6 +289,76 @@ function play() {
       die("Le tir a été précis. Conrad est tombé en héros.");
     break;
   }
+  case "fuite_epave":
+  show(`
+    <p>L’épave tremble. Les murs grincent.
+    L’air devient irrespirable.</p>
+    <button onclick="qteRandom('porte','mort_asphyxie')">
+      Forcer la porte
+    </button>
+  `);
+break;
+
+case "porte":
+  show(`
+    <p>La porte cède. Tu tombes à genoux.
+    Des pas résonnent derrière toi.</p>
+    <button onclick="qteRandom('couloir','mort_capture')">
+      Se relever
+    </button>
+  `);
+break;
+
+case "couloir":
+  show(`
+    <p>Un long couloir noyé dans l’ombre.
+    Tu entends Julia appeler ton nom.</p>
+    <button onclick="next('choix_julia')">Répondre</button>
+    <button onclick="next('ignorer_julia')">L’ignorer</button>
+  `);
+break;
+
+case "choix_julia":
+  state.flags.juliaTrust++;
+  show(`
+    <p>Julia te rejoint, tremblante.</p>
+    <button onclick="next('ensemble')">Avancer ensemble</button>
+  `);
+break;
+
+case "ignorer_julia":
+  show(`
+    <p>Tu avances seul.
+    Le silence devient assourdissant.</p>
+    <button onclick="next('seul')">Continuer</button>
+  `);
+break;
+
+case "ensemble":
+  show(`
+    <p>À deux, vous atteignez le pont.</p>
+    <button onclick="qteRandom('sauve','mort_chute_finale')">
+      Sauter
+    </button>
+  `);
+break;
+
+case "seul":
+  die("En abandonnant Julia, Conrad s’est retrouvé isolé et piégé.");
+break;
+
+case "mort_asphyxie":
+  die("Privé d’air dans l’épave, Conrad a perdu connaissance.");
+break;
+
+case "mort_capture":
+  die("Rattrapé par les pirates, Conrad n’a jamais quitté le navire.");
+break;
+
+case "mort_chute_finale":
+  die("Le saut était trop risqué. Conrad s’est écrasé contre la coque.");
+break;
+
 }
 
 menuPrincipal();
