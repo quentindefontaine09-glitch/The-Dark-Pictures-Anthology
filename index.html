@@ -127,7 +127,7 @@ function qte(success, fail, time = 6200) {
   `);
 
   setTimeout(() => {
-    if (state.scene !== success) {
+    if (state.scene === "attente_qte") {
       go(fail);
     }
   }, time);
@@ -277,7 +277,8 @@ function playConrad() {
 
   /* ===== QTE ===== */
   if (state.scene === "qte_equilibre") {
-    qte("reussi_equilibre", "rate_equilibre", 1000);
+    qte("reussi_equilibre", "rate_equilibre", 2000);
+    state.scene = "attente_qte";
     return;
   }
 
