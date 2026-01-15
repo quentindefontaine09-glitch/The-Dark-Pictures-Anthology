@@ -277,7 +277,7 @@ function playConrad() {
 
   /* ===== QTE ===== */
   if (state.scene === "qte_equilibre") {
-    qte("reussi_equilibre", "rate_equilibre", 3000);
+    qte("reussi_equilibre", "rate_equilibre", 4000);
     state.scene = "attente_qte";
     return;
   }
@@ -405,7 +405,7 @@ function playConrad() {
 
   /* ================= QTE ================= */
   if (state.scene === "qte_fuite") {
-    qte("fuite_reussie", "fuite_ratee", 3000);
+    qte("fuite_reussie", "fuite_ratee", 4000);
     return;
   }
 
@@ -536,7 +536,7 @@ function playConrad() {
   }
 
   if (state.scene === "qte_intervention") {
-    qte("intervention_reussie", "intervention_ratee", 3000);
+    qte("intervention_reussie", "intervention_ratee", 4000);
     return;
   }
 
@@ -630,7 +630,7 @@ function playAndrew() {
   }
 
   if (state.scene === "qte_panique") {
-    qte("calme", "panique", 3000);
+    qte("calme", "panique", 4000);
     return;
   }
 
@@ -685,7 +685,7 @@ function playRachel() {
   }
 
   if (state.scene === "qte_atterrissage") {
-    qte("vivante", "mort", 3000);
+    qte("vivante", "mort", 4000);
     return;
   }
 
@@ -739,7 +739,7 @@ function playKate() {
   }
 
   if (state.scene === "qte_cachette") {
-    qte("cachee", "attrapee", 3000);
+    qte("cachee", "attrapee", 4000);
     return;
   }
 
