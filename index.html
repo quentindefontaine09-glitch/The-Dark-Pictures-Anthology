@@ -2,36 +2,32 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>The Dark Pictures – Conrad</title>
+<title>The Dark Pictures</title>
 <style>
 body {
-  background: black;
-  color: #ddd;
-  font-family: Georgia, serif;
-  padding: 40px;
+  background:black;
+  color:#ddd;
+  font-family:Georgia, serif;
+  padding:40px;
 }
-#content {
-  max-width: 800px;
-  margin: auto;
-}
+#content { max-width:800px; margin:auto; }
 button {
-  display: block;
-  margin: 10px 0;
-  padding: 10px;
-  background: #111;
-  color: #eee;
-  border: 1px solid #555;
-  cursor: pointer;
+  display:block;
+  margin:10px 0;
+  padding:10px;
+  background:#111;
+  color:#eee;
+  border:1px solid #444;
+  cursor:pointer;
 }
-button:hover {
-  background: #333;
-}
-
-}
-
-.small {
-  font-size: 0.9em;
-  color: #aaa;
+button:hover { background:#333; }
+.qte {
+  width:40px;
+  height:40px;
+  background:red;
+  border-radius:50%;
+  position:absolute;
+  cursor:pointer;
 }
 </style>
 </head>
@@ -40,24 +36,22 @@ button:hover {
 <div id="content"></div>
 
 <script>
-// ============================
+// ======================
 // ÉTAT DU JEU
-// ============================
+// ======================
 let state = {
   character: null,
   scene: "menu",
   alive: true,
   flags: {
     juliaTrust: 0,
-    bravado: 0,
     blessure: false
   }
 };
 
-
-// ============================
+// ======================
 // OUTILS
-// ============================
+// ======================
 function show(html) {
   document.getElementById("content").innerHTML = html;
 }
@@ -65,11 +59,66 @@ function show(html) {
 function next(scene) {
   state.scene = scene;
   play();
-  function play() {
+}
+
+// ======================
+// MENU
+// ======================
+function menu() {
+  show(`
+    <h1>The Dark Pictures</h1>
+    <button onclick="start('conrad')">Conrad – Man of Medan</button>
+    <button onclick="alert('À venir')">Andrew</button>
+    <button onclick="alert('À venir')">Rachel</button>
+    <button onclick="alert('À venir')">Kate</button>
+  `);
+}
+
+function start(char) {
+  state.character = char;
+  state.scene = "intro";
+  state.alive = true;
+  state.flags = { juliaTrust:0, blessure:false };
+  play();
+}
+
+// ======================
+// QTE SOURIS
+// ======================
+function qte(success, fail) {
+  const size = 40;
+  const x = Math.random() * (window.innerWidth - size);
+  const y = Math.random() * (window.innerHeight - size);
+
+  show(`<p>AGIS !</p>
+    <div class="qte" style="left:${x}px;top:${y}px"
+    onclick="next('${success}')"></div>`);
+
+  setTimeout(() => {
+    if (state.scene !== success) next(fail);
+  }, 1200);
+}
+
+// ======================
+// MORT
+// ======================
+function die(text) {
+  state.alive = false;
+  show(`
+    <h2>CONRAD EST MORT</h2>
+    <p>${text}</p>
+    <button onclick="state.scene='menu';menu()">Menu</button>
+  `);
+}
+
+// ======================
+// JEU
+// ======================
+function play() {
   if (!state.alive) return;
 
   if (state.scene === "menu") {
-    menuPrincipal();
+    menu();
     return;
   }
 
@@ -79,401 +128,87 @@ function next(scene) {
   }
 }
 
-}
-function menuPrincipal() {
-  show(`
-    <h1>The Dark Pictures</h1>
-    <p class="small">Choisissez votre histoire</p>
+// ======================
+// CONRAD — BASE SOLIDE
+// ======================
+function playConrad() {
 
-    <button onclick="startCharacter('conrad')">
-      Conrad – Man of Medan
-    </button>
+  switch(state.scene) {
 
-    <button onclick="locked()">
-      Andrew – Little Hope
-    </button>
-
-    <button onclick="locked()">
-      Rachel – House of Ashes
-    </button>
-
-    <button onclick="locked()">
-      Kate – The Devil In Me
-    </button>
-  `);
-}
-
-function locked() {
-  alert("Cette histoire sera ajoutée plus tard.");
-}
-
-function startCharacter(char) {
-  state.character = char;
-  state.scene = "intro";
-  state.alive = true;
-  state.flags = {
-    juliaTrust: 0,
-    bravado: 0,
-    blessure: false
-    startMusic();
-
-  };
-  play();
-}
-
-// ============================
-// QTE SOURIS
-// ============================
-function qte(success, fail) {
-  qteSound.currentTime = 0;
-qteSound.play();
-
-  show(`
-    <p>AGIS VITE</p>
-    <div class="qte" onclick="next('${success}')"></div>
-    <p class="small">Clique sur le cercle avant qu’il ne soit trop tard</p>
-  `);
-
-  setTimeout(() => {
-    if (state.scene !== success) {
-      next(fail);
-    }
-  }, 2500);
-}
-function qteRandom(success, fail) {
-  const size = 40;
-  const x = Math.random() * (window.innerWidth - size);
-  const y = Math.random() * (window.innerHeight - size);
-
-  show(`
-    <p>RÉAGIS !</p>
-    <div 
-      style="
-        width:${size}px;
-        height:${size}px;
-        background:red;
-        border-radius:50%;
-        position:absolute;
-        left:${x}px;
-        top:${y}px;
-        cursor:pointer;
-      "
-      onclick="next('${success}')"
-    ></div>
-  `);
-
-  setTimeout(() => {
-    if (state.scene !== success) {
-      next(fail);
-    }
-  }, 1200);
-}
-
-// ============================
-// MORT
-// ============================
-function die(reason) {
-  state.alive = false;
-  show(`
-    <h2>CONRAD EST MORT</h2>
-    <p>${reason}</p>
-    <p class="small">Le Conservateur note calmement cette fin.</p>
-  `);
-}
-
-// ============================
-// JEU
-// ============================
-function play() {
-  if (!state.alive) return;
-
-  switch (state.scene) {
-
-    // ================= INTRO =================
     case "intro":
-  show(`
-    <p><em>Le Conservateur :</em><br>
-    "Conrad… Certains se cachent derrière l’humour,
-    d’autres derrière le courage. Peu survivent sans payer le prix."</p>
+      show(`
+        <p><em>Le Conservateur :</em><br>
+        "L’arrogance est parfois un masque pour la peur."</p>
+        <button onclick="next('plongee')">Continuer</button>
+      `);
+    break;
 
-    <button onclick="next('plongee')">Continuer</button>
-  `);
-break;
-
-
-    // ================= PLONGÉE =================
     case "plongee":
       show(`
-        <p>L’océan est sombre. L’épave repose sous toi,
-        massive, silencieuse, presque vivante.</p>
-        <button onclick="next('dialogue_julia')">Descendre</button>
+        <p>L’épave repose sous la surface.
+        Le silence est oppressant.</p>
+        <button onclick="next('dialogue')">Descendre</button>
       `);
     break;
 
-    // ================= DIALOGUE =================
-    case "dialogue_julia":
+    case "dialogue":
       show(`
-        <p><strong>Julia :</strong> "Conrad… t’as pas peur, au moins ?"</p>
+        <p><strong>Julia :</strong> "Tu es sûr de toi ?"</p>
         <button onclick="state.flags.juliaTrust++; next('epave')">
-          "Tout va bien, fais-moi confiance."
+          "Fais-moi confiance"
         </button>
-        <button onclick="state.flags.bravado++; next('epave')">
-          "Relax, c’est juste un tas de ferraille."
+        <button onclick="next('epave')">
+          "On n’a pas le choix"
         </button>
       `);
     break;
 
-    // ================= ÉPAVE =================
     case "epave":
       show(`
-        <p>À l’intérieur, l’air est lourd. Les couloirs grincent.
-        Tu entends presque des murmures.</p>
-        <button onclick="qte('reussi_passage','mort_chute')">
-          Traverser la passerelle
+        <p>Le métal gémit sous tes pas.</p>
+        <button onclick="qte('reussi','mort_chute')">
+          Traverser
         </button>
       `);
     break;
 
-    case "reussi_passage":
+    case "reussi":
       state.flags.blessure = true;
       show(`
-        <p>Tu passes… mais ton pied glisse.
-        Ta jambe heurte le métal.</p>
-        <button onclick="next('pirates')">Continuer</button>
+        <p>Tu passes, mais ta jambe heurte le métal.</p>
+        <button onclick="next('suite')">Continuer</button>
       `);
     break;
 
-    // ================= PIRATES =================
-    case "pirates":
+    case "suite":
       show(`
-        <p>Des voix. Des rires. Des armes.
-        Les pirates sont là.</p>
-        <button onclick="next('choix_pirates')">Continuer</button>
+        <p>Des voix résonnent. Les pirates.</p>
+        <button onclick="qte('survie','mort_balle')">
+          Fuir
+        </button>
       `);
     break;
 
-    case "choix_pirates":
+    case "survie":
       show(`
-        <p><strong>Julia :</strong> "Qu’est-ce qu’on fait ?"</p>
-        <button onclick="next('distraction')">Faire diversion</button>
-        <button onclick="next('cachette')">Se cacher</button>
+        <h2>CONRAD SURVIT</h2>
+        <p>Le jour se lève sur la mer.</p>
+        <button onclick="state.scene='menu';menu()">Menu</button>
       `);
-    break;
-
-    case "distraction":
-      qte("sauvetage", "mort_balle");
-    break;
-
-    case "cachette":
-      die("En restant caché, Conrad a laissé Julia mourir seule.");
-    break;
-
-    case "sauvetage":
-      show(`
-        <p>Tu tires Julia hors de portée.
-        Son regard change. Elle te fait confiance.</p>
-        <button onclick="next('final')">Continuer</button>
-      `);
-    break;
-
-    // ================= FIN =================
-    case "final":
-      if (state.flags.blessure) {
-        die("Blessé, Conrad n’a pas pu fuir assez vite.");
-      } else {
-        show(`
-          <h2>CONRAD SURVIT</h2>
-          <p>Le soleil se lève sur une mer calme.
-          Tu as survécu… cette fois.</p>
-        `);
-      }
     break;
 
     case "mort_chute":
-      die("La passerelle s’est effondrée. La chute a été mortelle.");
+      die("La passerelle s’est effondrée sous son poids.");
     break;
 
     case "mort_balle":
-      die("Le tir a été précis. Conrad est tombé en héros.");
+      die("Le tir a été fatal.");
     break;
   }
-  case "fuite_epave":
-  show(`
-    <p>L’épave tremble. Les murs grincent.
-    L’air devient irrespirable.</p>
-    <button onclick="qteRandom('porte','mort_asphyxie')">
-      Forcer la porte
-    </button>
-  `);
-break;
-
-case "porte":
-  show(`
-    <p>La porte cède. Tu tombes à genoux.
-    Des pas résonnent derrière toi.</p>
-    <button onclick="qteRandom('couloir','mort_capture')">
-      Se relever
-    </button>
-  `);
-break;
-
-case "couloir":
-  show(`
-    <p>Un long couloir noyé dans l’ombre.
-    Tu entends Julia appeler ton nom.</p>
-    <button onclick="next('choix_julia')">Répondre</button>
-    <button onclick="next('ignorer_julia')">L’ignorer</button>
-  `);
-break;
-
-case "choix_julia":
-  state.flags.juliaTrust++;
-  show(`
-    <p>Julia te rejoint, tremblante.</p>
-    <button onclick="next('ensemble')">Avancer ensemble</button>
-  `);
-break;
-
-case "ignorer_julia":
-  show(`
-    <p>Tu avances seul.
-    Le silence devient assourdissant.</p>
-    <button onclick="next('seul')">Continuer</button>
-  `);
-break;
-
-case "ensemble":
-  show(`
-    <p>À deux, vous atteignez le pont.</p>
-    <button onclick="qteRandom('sauve','mort_chute_finale')">
-      Sauter
-    </button>
-  `);
-break;
-
-case "seul":
-  die("En abandonnant Julia, Conrad s’est retrouvé isolé et piégé.");
-break;
-
-case "mort_asphyxie":
-  die("Privé d’air dans l’épave, Conrad a perdu connaissance.");
-break;
-
-case "mort_capture":
-  die("Rattrapé par les pirates, Conrad n’a jamais quitté le navire.");
-break;
-
-case "mort_chute_finale":
-  die("Le saut était trop risqué. Conrad s’est écrasé contre la coque.");
-break;
-case "plongee":
-  show(`
-    <p>L’eau engloutit le monde.
-    Sous toi, l’épave du cargo repose comme un cercueil ouvert.</p>
-    <button onclick="next('interieur')">Entrer dans l'épave</button>
-  `);
-break;
-
-case "interieur":
-  show(`
-    <p>À l’intérieur, l’air est lourd.
-    Le métal grince, comme si le navire respirait.</p>
-    <button onclick="next('dialogue_julia2')">Avancer</button>
-  `);
-break;
-
-case "dialogue_julia2":
-  if (state.flags.juliaTrust > 0) {
-    show(`
-      <p><strong>Julia :</strong> "Je… je te fais confiance, Conrad."</p>
-      <button onclick="next('hallucination')">Continuer</button>
-    `);
-  } else {
-    show(`
-      <p>Le silence est pesant.
-      Julia reste à distance.</p>
-      <button onclick="next('hallucination')">Continuer</button>
-    `);
-  }
-break;
-
-case "hallucination":
-  show(`
-    <p>Ton reflet dans une vitre te sourit.
-    Il ne bouge pas quand tu bouges.</p>
-    <button onclick="qteRandom('panic_control','mort_folie')">
-      Détourner le regard
-    </button>
-  `);
-break;
-
-case "panic_control":
-  show(`
-    <p>Tu reprends le contrôle.
-    Mais tu sais que quelque chose t’observe.</p>
-    <button onclick="next('course')">Avancer</button>
-  `);
-break;
-
-case "course":
-  show(`
-    <p>Des pas résonnent derrière toi.
-    Les pirates sont proches.</p>
-    <button onclick="qteRandom('trappe','mort_capture')">
-      Courir
-    </button>
-  `);
-break;
-
-case "trappe":
-  show(`
-    <p>Tu te jettes dans une trappe.
-    L’obscurité est totale.</p>
-    <button onclick="next('decision_finale')">Te relever</button>
-  `);
-break;
-
-case "decision_finale":
-  show(`
-    <p>Une échelle mène vers le pont.
-    Une autre vers les cales inondées.</p>
-    <button onclick="next('pont')">Monter</button>
-    <button onclick="next('cales')">Descendre</button>
-  `);
-break;
-
-case "pont":
-  if (state.flags.blessure) {
-    die("Blessé, Conrad n’a pas pu grimper assez vite. Les pirates l’ont rattrapé.");
-  } else {
-    show(`
-      <p>Le vent fouette ton visage.
-      Un bateau de secours est visible au loin.</p>
-      <button onclick="next('fin_survie')">Appeler à l’aide</button>
-    `);
-  }
-break;
-
-case "cales":
-  die("Les cales se remplissent d’eau. Conrad s’y est noyé, seul.");
-break;
-
-case "fin_survie":
-  show(`
-    <h2>CONRAD A SURVÉCU</h2>
-    <p>Le jour se lève sur la mer.
-    Le Conservateur ferme lentement son livre.</p>
-  `);
-break;
-
-case "mort_folie":
-  die("Les hallucinations ont pris le dessus. Conrad a perdu toute notion de réalité.");
-break;
-
 }
 
-menuPrincipal();
-
+// ======================
+menu();
 </script>
 </body>
 </html>
