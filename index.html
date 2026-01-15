@@ -2,57 +2,41 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>The Dark Pictures – Interactive Horror</title>
+<title>The Dark Pictures</title>
 
 <style>
 body {
-  background: #000;
-  color: #ddd;
-  font-family: Georgia, serif;
-  padding: 40px;
-  margin: 0;
+  background:black;
+  color:#ddd;
+  font-family:Georgia, serif;
+  padding:40px;
+  margin:0;
 }
 #content {
-  max-width: 900px;
-  margin: auto;
-  position: relative;
-}
-h1, h2 {
-  font-weight: normal;
-  letter-spacing: 1px;
+  max-width:900px;
+  margin:auto;
+  position:relative;
 }
 button {
-  display: block;
-  margin: 12px 0;
-  padding: 12px;
-  width: 100%;
-  background: #111;
-  color: #eee;
-  border: 1px solid #444;
-  cursor: pointer;
-  font-size: 16px;
+  display:block;
+  width:100%;
+  margin:10px 0;
+  padding:12px;
+  background:#111;
+  color:#eee;
+  border:1px solid #444;
+  cursor:pointer;
 }
-button:hover {
-  background: #222;
-}
-.small {
-  font-size: 0.9em;
-  color: #aaa;
-}
+button:hover { background:#222; }
+.small { color:#aaa; font-size:0.9em; }
+
 .qte {
-  position: absolute;
-  width: 42px;
-  height: 42px;
-  background: darkred;
-  border-radius: 50%;
-  cursor: pointer;
-}
-.fade {
-  animation: fade 0.5s;
-}
-@keyframes fade {
-  from { opacity: 0; }
-  to { opacity: 1; }
+  position:absolute;
+  width:40px;
+  height:40px;
+  background:darkred;
+  border-radius:50%;
+  cursor:pointer;
 }
 </style>
 </head>
@@ -61,9 +45,9 @@ button:hover {
 <div id="content"></div>
 
 <script>
-/* =====================================================
-   ÉTAT GLOBAL DU JEU
-   ===================================================== */
+// =====================
+// ÉTAT DU JEU
+// =====================
 let state = {
   character: null,
   scene: "menu",
@@ -72,15 +56,15 @@ let state = {
   log: ""
 };
 
-/* =====================================================
-   AUDIO
-   ===================================================== */
+// =====================
+// AUDIO
+// =====================
 const music = new Audio("audio/ambiance.mp3");
 music.loop = true;
 music.volume = 0.4;
 
 const qteSound = new Audio("audio/qte.mp3");
-qteSound.volume = 0.9;
+qteSound.volume = 0.8;
 
 function startMusic() {
   if (music.paused) {
@@ -88,15 +72,11 @@ function startMusic() {
   }
 }
 
-/* =====================================================
-   OUTILS D’AFFICHAGE
-   ===================================================== */
+// =====================
+// OUTILS
+// =====================
 function show(html) {
-  const c = document.getElementById("content");
-  c.innerHTML = html;
-  c.classList.remove("fade");
-  void c.offsetWidth;
-  c.classList.add("fade");
+  document.getElementById("content").innerHTML = html;
 }
 
 function go(scene) {
@@ -104,35 +84,19 @@ function go(scene) {
   play();
 }
 
-/* =====================================================
-   MENU PRINCIPAL
-   ===================================================== */
+// =====================
+// MENU
+// =====================
 function menu() {
   show(`
     <h1>The Dark Pictures</h1>
-    <p class="small">Choisissez un personnage</p>
-
-    <button onclick="startCharacter('conrad')">
-      Conrad – Man of Medan
-    </button>
-
-    <button onclick="startCharacter('andrew')">
-      Andrew – Little Hope
-    </button>
-
-    <button onclick="startCharacter('rachel')">
-      Rachel – House of Ashes
-    </button>
-
-    <button onclick="startCharacter('kate')">
-      Kate – The Devil In Me
-    </button>
+    <button onclick="startCharacter('conrad')">Conrad – Man of Medan</button>
+    <button onclick="startCharacter('andrew')">Andrew – Little Hope</button>
+    <button onclick="startCharacter('rachel')">Rachel – House of Ashes</button>
+    <button onclick="startCharacter('kate')">Kate – The Devil In Me</button>
   `);
 }
 
-/* =====================================================
-   DÉMARRAGE D’UN PERSONNAGE
-   ===================================================== */
 function startCharacter(char) {
   startMusic();
   state.character = char;
@@ -143,14 +107,14 @@ function startCharacter(char) {
   play();
 }
 
-/* =====================================================
-   QTE SOURIS (ALÉATOIRE)
-   ===================================================== */
+// =====================
+// QTE SOURIS
+// =====================
 function qte(success, fail, time = 1200) {
   qteSound.currentTime = 0;
   qteSound.play();
 
-  const size = 42;
+  const size = 40;
   const x = Math.random() * (window.innerWidth - size);
   const y = Math.random() * (window.innerHeight - size);
 
@@ -169,24 +133,21 @@ function qte(success, fail, time = 1200) {
   }, time);
 }
 
-/* =====================================================
-   MORT
-   ===================================================== */
+// =====================
+// MORT
+// =====================
 function die(reason) {
   state.alive = false;
   show(`
     <h2>PERSONNAGE DÉCÉDÉ</h2>
     <p>${reason}</p>
-    <p class="small">
-      Le Conservateur referme lentement son livre.
-    </p>
     <button onclick="state.scene='menu';menu()">Menu</button>
   `);
 }
 
-/* =====================================================
-   CERVEAU DU JEU
-   ===================================================== */
+// =====================
+// CERVEAU DU JEU
+// =====================
 function play() {
   if (!state.alive) return;
 
@@ -195,34 +156,19 @@ function play() {
     return;
   }
 
-  switch (state.character) {
-    case "conrad":
-      playConrad();
-      break;
-    case "andrew":
-      playAndrew();
-      break;
-    case "rachel":
-      playRachel();
-      break;
-    case "kate":
-      playKate();
-      break;
-  }
+  if (state.character === "conrad") playConrad();
+  if (state.character === "andrew") playAndrew();
+  if (state.character === "rachel") playRachel();
+  if (state.character === "kate") playKate();
 }
 
-/* =====================================================
-   PLACEHOLDERS DES HISTOIRES
-   (LES VRAIES HISTOIRES SERONT COLLÉES ICI PLUS TARD)
-   ===================================================== */
-
+// =====================
+// HISTOIRES (PLACEHOLDERS)
+// =====================
 function playConrad() {
   show(`
     <h2>Conrad – Man of Medan</h2>
-    <p>Histoire à venir.</p>
-    <p class="small">
-      (Le moteur fonctionne. L’histoire sera ajoutée ici.)
-    </p>
+    <p>L’histoire sera ajoutée ici.</p>
     <button onclick="state.scene='menu';menu()">Menu</button>
   `);
 }
@@ -230,7 +176,7 @@ function playConrad() {
 function playAndrew() {
   show(`
     <h2>Andrew – Little Hope</h2>
-    <p>Histoire à venir.</p>
+    <p>L’histoire sera ajoutée ici.</p>
     <button onclick="state.scene='menu';menu()">Menu</button>
   `);
 }
@@ -238,7 +184,7 @@ function playAndrew() {
 function playRachel() {
   show(`
     <h2>Rachel – House of Ashes</h2>
-    <p>Histoire à venir.</p>
+    <p>L’histoire sera ajoutée ici.</p>
     <button onclick="state.scene='menu';menu()">Menu</button>
   `);
 }
@@ -246,14 +192,12 @@ function playRachel() {
 function playKate() {
   show(`
     <h2>Kate – The Devil In Me</h2>
-    <p>Histoire à venir.</p>
+    <p>L’histoire sera ajoutée ici.</p>
     <button onclick="state.scene='menu';menu()">Menu</button>
   `);
 }
 
-/* =====================================================
-   LANCEMENT
-   ===================================================== */
+// =====================
 menu();
 </script>
 </body>
