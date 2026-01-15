@@ -166,12 +166,162 @@ function play() {
 // HISTOIRES (PLACEHOLDERS)
 // =====================
 function playConrad() {
-  show(`
-    <h2>Conrad – Man of Medan</h2>
-    <p>L’histoire sera ajoutée ici.</p>
-    <button onclick="state.scene='menu';menu()">Menu</button>
-  `);
+
+  /* ===== SCÈNE : LE CONSERVATEUR ===== */
+  if (state.scene === "intro") {
+    show(`
+      <h2>Le Conservateur</h2>
+      <p>
+        Une pièce hors du temps. Des étagères infinies, des livres reliés de cuir,
+        l’odeur de la poussière et de l’encre ancienne.
+      </p>
+      <p>
+        Un homme élégant referme lentement un ouvrage.
+      </p>
+      <p><em>
+        « Ah… Conrad.  
+        Un jeune homme persuadé que le danger n’est qu’un jeu.
+        Voyons si vous saurez tourner les pages… sans les déchirer. »
+      </em></p>
+      <button onclick="go('boat_intro')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== SCÈNE : LE BATEAU ===== */
+  if (state.scene === "boat_intro") {
+    show(`
+      <h2>Océan Pacifique</h2>
+      <p>
+        Le soleil écrase la surface de l’eau.  
+        Le bateau tangue doucement.
+      </p>
+      <p>
+        Conrad s’appuie contre le bastingage, lunettes de soleil sur le nez,
+        un sourire arrogant aux lèvres.
+      </p>
+      <p>
+        Julia rit quelque part derrière lui.  
+        Fliss tient la barre.  
+        Alex vérifie son équipement de plongée.
+      </p>
+      <p>
+        Tout semble… normal.
+      </p>
+
+      <button onclick="go('dialogue_julia')">
+        Se moquer de Julia
+      </button>
+
+      <button onclick="go('dialogue_fliss')">
+        Parler à Fliss
+      </button>
+    `);
+    return;
+  }
+
+  /* ===== DIALOGUE JULIA ===== */
+  if (state.scene === "dialogue_julia") {
+    state.flags.taquin = true;
+    show(`
+      <p>
+        « Sérieusement Julia, tu comptes plonger avec ÇA ? »
+      </p>
+      <p>
+        Elle lève les yeux au ciel, mais sourit.
+      </p>
+      <p class="small">
+        Votre légèreté masque une certaine nervosité.
+      </p>
+      <button onclick="go('ombre_sous_leau')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== DIALOGUE FLISS ===== */
+  if (state.scene === "dialogue_fliss") {
+    state.flags.respectFliss = true;
+    show(`
+      <p>
+        Fliss vous lance un regard méfiant.
+      </p>
+      <p>
+        « Ce coin est dangereux. On ne traîne pas ici. »
+      </p>
+      <p>
+        Pour une fois, Conrad se tait.
+      </p>
+      <button onclick="go('ombre_sous_leau')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== PRÉFIGURATION HORREUR ===== */
+  if (state.scene === "ombre_sous_leau") {
+    show(`
+      <p>
+        Sous la surface, quelque chose bouge.
+      </p>
+      <p>
+        Une ombre… trop grande pour être un poisson.
+      </p>
+      <p>
+        Conrad sent un frisson lui parcourir l’échine.
+      </p>
+      <button onclick="go('qte_equilibre')">
+        Se pencher pour mieux voir
+      </button>
+    `);
+    return;
+  }
+
+  /* ===== QTE ===== */
+  if (state.scene === "qte_equilibre") {
+    qte("reussi_equilibre", "rate_equilibre", 1000);
+    return;
+  }
+
+  if (state.scene === "reussi_equilibre") {
+    show(`
+      <p>
+        Conrad se rattrape de justesse.
+      </p>
+      <p>
+        L’ombre disparaît.
+      </p>
+      <button onclick="go('calme_trompeur')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "rate_equilibre") {
+    die(`
+      Conrad bascule par-dessus bord.
+      Personne ne le voit sombrer.
+      Le silence de l’océan devient sa tombe.
+    `);
+    return;
+  }
+
+  /* ===== CALME AVANT LA TEMPÊTE ===== */
+  if (state.scene === "calme_trompeur") {
+    show(`
+      <p>
+        Le rire revient sur le bateau.
+      </p>
+      <p>
+        Mais quelque part…  
+        quelque chose a remarqué leur présence.
+      </p>
+      <p class="small">
+        Le Conservateur tourne une page.
+      </p>
+      <button onclick="go('menu')">Retour menu (temporaire)</button>
+    `);
+    return;
+  }
 }
+
 
 function playAndrew() {
   show(`
