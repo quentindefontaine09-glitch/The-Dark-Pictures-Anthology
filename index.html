@@ -1,1 +1,220 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>The Dark Pictures – Conrad</title>
+<style>
+body {
+  background: black;
+  color: #ddd;
+  font-family: Georgia, serif;
+  padding: 40px;
+}
+#content {
+  max-width: 800px;
+  margin: auto;
+}
+button {
+  display: block;
+  margin: 10px 0;
+  padding: 10px;
+  background: #111;
+  color: #eee;
+  border: 1px solid #555;
+  cursor: pointer;
+}
+button:hover {
+  background: #333;
+}
+.qte {
+  width: 120px;
+  height: 120px;
+  background: darkred;
+  border-radius: 50%;
+  margin: 40px auto;
+}
+.small {
+  font-size: 0.9em;
+  color: #aaa;
+}
+</style>
+</head>
+
+<body>
+<div id="content"></div>
+
+<script>
+// ============================
+// ÉTAT DU JEU
+// ============================
+let state = {
+  scene: "intro",
+  alive: true,
+  flags: {
+    juliaTrust: 0,
+    bravado: 0,
+    blessure: false
+  }
+};
+
+// ============================
+// OUTILS
+// ============================
+function show(html) {
+  document.getElementById("content").innerHTML = html;
+}
+
+function next(scene) {
+  state.scene = scene;
+  play();
+}
+
+// ============================
+// QTE SOURIS
+// ============================
+function qte(success, fail) {
+  show(`
+    <p>AGIS VITE</p>
+    <div class="qte" onclick="next('${success}')"></div>
+    <p class="small">Clique sur le cercle avant qu’il ne soit trop tard</p>
+  `);
+
+  setTimeout(() => {
+    if (state.scene !== success) {
+      next(fail);
+    }
+  }, 2500);
+}
+
+// ============================
+// MORT
+// ============================
+function die(reason) {
+  state.alive = false;
+  show(`
+    <h2>CONRAD EST MORT</h2>
+    <p>${reason}</p>
+    <p class="small">Le Conservateur note calmement cette fin.</p>
+  `);
+}
+
+// ============================
+// JEU
+// ============================
+function play() {
+  if (!state.alive) return;
+
+  switch (state.scene) {
+
+    // ================= INTRO =================
+    case "intro":
+      show(`
+        <p><em>Le Conservateur :</em><br>
+        "Certains masquent leur peur derrière l’humour."</p>
+        <button onclick="next('plongee')">Continuer</button>
+      `);
+    break;
+
+    // ================= PLONGÉE =================
+    case "plongee":
+      show(`
+        <p>L’océan est sombre. L’épave repose sous toi,
+        massive, silencieuse, presque vivante.</p>
+        <button onclick="next('dialogue_julia')">Descendre</button>
+      `);
+    break;
+
+    // ================= DIALOGUE =================
+    case "dialogue_julia":
+      show(`
+        <p><strong>Julia :</strong> "Conrad… t’as pas peur, au moins ?"</p>
+        <button onclick="state.flags.juliaTrust++; next('epave')">
+          "Tout va bien, fais-moi confiance."
+        </button>
+        <button onclick="state.flags.bravado++; next('epave')">
+          "Relax, c’est juste un tas de ferraille."
+        </button>
+      `);
+    break;
+
+    // ================= ÉPAVE =================
+    case "epave":
+      show(`
+        <p>À l’intérieur, l’air est lourd. Les couloirs grincent.
+        Tu entends presque des murmures.</p>
+        <button onclick="qte('reussi_passage','mort_chute')">
+          Traverser la passerelle
+        </button>
+      `);
+    break;
+
+    case "reussi_passage":
+      state.flags.blessure = true;
+      show(`
+        <p>Tu passes… mais ton pied glisse.
+        Ta jambe heurte le métal.</p>
+        <button onclick="next('pirates')">Continuer</button>
+      `);
+    break;
+
+    // ================= PIRATES =================
+    case "pirates":
+      show(`
+        <p>Des voix. Des rires. Des armes.
+        Les pirates sont là.</p>
+        <button onclick="next('choix_pirates')">Continuer</button>
+      `);
+    break;
+
+    case "choix_pirates":
+      show(`
+        <p><strong>Julia :</strong> "Qu’est-ce qu’on fait ?"</p>
+        <button onclick="next('distraction')">Faire diversion</button>
+        <button onclick="next('cachette')">Se cacher</button>
+      `);
+    break;
+
+    case "distraction":
+      qte("sauvetage", "mort_balle");
+    break;
+
+    case "cachette":
+      die("En restant caché, Conrad a laissé Julia mourir seule.");
+    break;
+
+    case "sauvetage":
+      show(`
+        <p>Tu tires Julia hors de portée.
+        Son regard change. Elle te fait confiance.</p>
+        <button onclick="next('final')">Continuer</button>
+      `);
+    break;
+
+    // ================= FIN =================
+    case "final":
+      if (state.flags.blessure) {
+        die("Blessé, Conrad n’a pas pu fuir assez vite.");
+      } else {
+        show(`
+          <h2>CONRAD SURVIT</h2>
+          <p>Le soleil se lève sur une mer calme.
+          Tu as survécu… cette fois.</p>
+        `);
+      }
+    break;
+
+    case "mort_chute":
+      die("La passerelle s’est effondrée. La chute a été mortelle.");
+    break;
+
+    case "mort_balle":
+      die("Le tir a été précis. Conrad est tombé en héros.");
+    break;
+  }
+}
+
+play();
+</script>
+</body>
+</html>
 
