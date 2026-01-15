@@ -2,32 +2,57 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>The Dark Pictures</title>
+<title>The Dark Pictures – Interactive Horror</title>
+
 <style>
 body {
-  background:black;
-  color:#ddd;
-  font-family:Georgia, serif;
-  padding:40px;
+  background: #000;
+  color: #ddd;
+  font-family: Georgia, serif;
+  padding: 40px;
+  margin: 0;
 }
-#content { max-width:800px; margin:auto; }
+#content {
+  max-width: 900px;
+  margin: auto;
+  position: relative;
+}
+h1, h2 {
+  font-weight: normal;
+  letter-spacing: 1px;
+}
 button {
-  display:block;
-  margin:10px 0;
-  padding:10px;
-  background:#111;
-  color:#eee;
-  border:1px solid #444;
-  cursor:pointer;
+  display: block;
+  margin: 12px 0;
+  padding: 12px;
+  width: 100%;
+  background: #111;
+  color: #eee;
+  border: 1px solid #444;
+  cursor: pointer;
+  font-size: 16px;
 }
-button:hover { background:#333; }
+button:hover {
+  background: #222;
+}
+.small {
+  font-size: 0.9em;
+  color: #aaa;
+}
 .qte {
-  width:40px;
-  height:40px;
-  background:red;
-  border-radius:50%;
-  position:absolute;
-  cursor:pointer;
+  position: absolute;
+  width: 42px;
+  height: 42px;
+  background: darkred;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.fade {
+  animation: fade 0.5s;
+}
+@keyframes fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 </style>
 </head>
@@ -36,84 +61,132 @@ button:hover { background:#333; }
 <div id="content"></div>
 
 <script>
-// ======================
-// ÉTAT DU JEU
-// ======================
+/* =====================================================
+   ÉTAT GLOBAL DU JEU
+   ===================================================== */
 let state = {
   character: null,
   scene: "menu",
   alive: true,
-  flags: {
-    juliaTrust: 0,
-    blessure: false
-  }
+  flags: {},
+  log: ""
 };
 
-// ======================
-// OUTILS
-// ======================
-function show(html) {
-  document.getElementById("content").innerHTML = html;
+/* =====================================================
+   AUDIO
+   ===================================================== */
+const music = new Audio("audio/ambiance.mp3");
+music.loop = true;
+music.volume = 0.4;
+
+const qteSound = new Audio("audio/qte.mp3");
+qteSound.volume = 0.9;
+
+function startMusic() {
+  if (music.paused) {
+    music.play().catch(()=>{});
+  }
 }
 
-function next(scene) {
+/* =====================================================
+   OUTILS D’AFFICHAGE
+   ===================================================== */
+function show(html) {
+  const c = document.getElementById("content");
+  c.innerHTML = html;
+  c.classList.remove("fade");
+  void c.offsetWidth;
+  c.classList.add("fade");
+}
+
+function go(scene) {
   state.scene = scene;
   play();
 }
 
-// ======================
-// MENU
-// ======================
+/* =====================================================
+   MENU PRINCIPAL
+   ===================================================== */
 function menu() {
   show(`
     <h1>The Dark Pictures</h1>
-    <button onclick="start('conrad')">Conrad – Man of Medan</button>
-    <button onclick="alert('À venir')">Andrew</button>
-    <button onclick="alert('À venir')">Rachel</button>
-    <button onclick="alert('À venir')">Kate</button>
+    <p class="small">Choisissez un personnage</p>
+
+    <button onclick="startCharacter('conrad')">
+      Conrad – Man of Medan
+    </button>
+
+    <button onclick="startCharacter('andrew')">
+      Andrew – Little Hope
+    </button>
+
+    <button onclick="startCharacter('rachel')">
+      Rachel – House of Ashes
+    </button>
+
+    <button onclick="startCharacter('kate')">
+      Kate – The Devil In Me
+    </button>
   `);
 }
 
-function start(char) {
+/* =====================================================
+   DÉMARRAGE D’UN PERSONNAGE
+   ===================================================== */
+function startCharacter(char) {
+  startMusic();
   state.character = char;
   state.scene = "intro";
   state.alive = true;
-  state.flags = { juliaTrust:0, blessure:false };
+  state.flags = {};
+  state.log = "";
   play();
 }
 
-// ======================
-// QTE SOURIS
-// ======================
-function qte(success, fail) {
-  const size = 40;
+/* =====================================================
+   QTE SOURIS (ALÉATOIRE)
+   ===================================================== */
+function qte(success, fail, time = 1200) {
+  qteSound.currentTime = 0;
+  qteSound.play();
+
+  const size = 42;
   const x = Math.random() * (window.innerWidth - size);
   const y = Math.random() * (window.innerHeight - size);
 
-  show(`<p>AGIS !</p>
-    <div class="qte" style="left:${x}px;top:${y}px"
-    onclick="next('${success}')"></div>`);
+  show(`
+    <p>AGIS VITE</p>
+    <div class="qte"
+      style="left:${x}px; top:${y}px"
+      onclick="go('${success}')">
+    </div>
+  `);
 
   setTimeout(() => {
-    if (state.scene !== success) next(fail);
-  }, 1200);
+    if (state.scene !== success) {
+      go(fail);
+    }
+  }, time);
 }
 
-// ======================
-// MORT
-// ======================
-function die(text) {
+/* =====================================================
+   MORT
+   ===================================================== */
+function die(reason) {
   state.alive = false;
   show(`
-    <h2>CONRAD EST MORT</h2>
-    <p>${text}</p>
+    <h2>PERSONNAGE DÉCÉDÉ</h2>
+    <p>${reason}</p>
+    <p class="small">
+      Le Conservateur referme lentement son livre.
+    </p>
     <button onclick="state.scene='menu';menu()">Menu</button>
   `);
 }
 
-// ======================
-// JEU
-// ======================
+/* =====================================================
+   CERVEAU DU JEU
+   ===================================================== */
 function play() {
   if (!state.alive) return;
 
@@ -122,94 +195,66 @@ function play() {
     return;
   }
 
-  if (state.character === "conrad") {
-    playConrad();
-    return;
+  switch (state.character) {
+    case "conrad":
+      playConrad();
+      break;
+    case "andrew":
+      playAndrew();
+      break;
+    case "rachel":
+      playRachel();
+      break;
+    case "kate":
+      playKate();
+      break;
   }
 }
 
-// ======================
-// CONRAD — BASE SOLIDE
-// ======================
+/* =====================================================
+   PLACEHOLDERS DES HISTOIRES
+   (LES VRAIES HISTOIRES SERONT COLLÉES ICI PLUS TARD)
+   ===================================================== */
+
 function playConrad() {
-
-  switch(state.scene) {
-
-    case "intro":
-      show(`
-        <p><em>Le Conservateur :</em><br>
-        "L’arrogance est parfois un masque pour la peur."</p>
-        <button onclick="next('plongee')">Continuer</button>
-      `);
-    break;
-
-    case "plongee":
-      show(`
-        <p>L’épave repose sous la surface.
-        Le silence est oppressant.</p>
-        <button onclick="next('dialogue')">Descendre</button>
-      `);
-    break;
-
-    case "dialogue":
-      show(`
-        <p><strong>Julia :</strong> "Tu es sûr de toi ?"</p>
-        <button onclick="state.flags.juliaTrust++; next('epave')">
-          "Fais-moi confiance"
-        </button>
-        <button onclick="next('epave')">
-          "On n’a pas le choix"
-        </button>
-      `);
-    break;
-
-    case "epave":
-      show(`
-        <p>Le métal gémit sous tes pas.</p>
-        <button onclick="qte('reussi','mort_chute')">
-          Traverser
-        </button>
-      `);
-    break;
-
-    case "reussi":
-      state.flags.blessure = true;
-      show(`
-        <p>Tu passes, mais ta jambe heurte le métal.</p>
-        <button onclick="next('suite')">Continuer</button>
-      `);
-    break;
-
-    case "suite":
-      show(`
-        <p>Des voix résonnent. Les pirates.</p>
-        <button onclick="qte('survie','mort_balle')">
-          Fuir
-        </button>
-      `);
-    break;
-
-    case "survie":
-      show(`
-        <h2>CONRAD SURVIT</h2>
-        <p>Le jour se lève sur la mer.</p>
-        <button onclick="state.scene='menu';menu()">Menu</button>
-      `);
-    break;
-
-    case "mort_chute":
-      die("La passerelle s’est effondrée sous son poids.");
-    break;
-
-    case "mort_balle":
-      die("Le tir a été fatal.");
-    break;
-  }
+  show(`
+    <h2>Conrad – Man of Medan</h2>
+    <p>Histoire à venir.</p>
+    <p class="small">
+      (Le moteur fonctionne. L’histoire sera ajoutée ici.)
+    </p>
+    <button onclick="state.scene='menu';menu()">Menu</button>
+  `);
 }
 
-// ======================
+function playAndrew() {
+  show(`
+    <h2>Andrew – Little Hope</h2>
+    <p>Histoire à venir.</p>
+    <button onclick="state.scene='menu';menu()">Menu</button>
+  `);
+}
+
+function playRachel() {
+  show(`
+    <h2>Rachel – House of Ashes</h2>
+    <p>Histoire à venir.</p>
+    <button onclick="state.scene='menu';menu()">Menu</button>
+  `);
+}
+
+function playKate() {
+  show(`
+    <h2>Kate – The Devil In Me</h2>
+    <p>Histoire à venir.</p>
+    <button onclick="state.scene='menu';menu()">Menu</button>
+  `);
+}
+
+/* =====================================================
+   LANCEMENT
+   ===================================================== */
 menu();
 </script>
 </body>
 </html>
-
