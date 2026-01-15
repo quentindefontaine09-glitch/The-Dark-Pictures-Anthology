@@ -316,6 +316,158 @@ function playConrad() {
       <p class="small">
         Le Conservateur tourne une page.
       </p>
+        /* ===== CAPTURE PAR LES PIRATES ===== */
+  if (state.scene === "capture") {
+    show(`
+      <h2>Le Cargo</h2>
+      <p>
+        Le sac est arraché de sa tête.
+        Une odeur de rouille et de pétrole lui brûle les narines.
+      </p>
+      <p>
+        Autour de lui, Julia gémit.
+        Alex est maintenu à genoux.
+        Fliss fixe le sol, mâchoires serrées.
+      </p>
+      <p>
+        Conrad comprend : ce n’est pas un simple vol.
+      </p>
+
+      <button onclick="go('dialogue_pirate')">
+        Répondre avec sarcasme
+      </button>
+
+      <button onclick="go('observer_silence')">
+        Se taire et observer
+      </button>
+    `);
+    return;
+  }
+
+  /* ===== DIALOGUE PIRATE ===== */
+  if (state.scene === "dialogue_pirate") {
+    state.flags.provoquePirates = true;
+    show(`
+      <p>
+        « Sérieusement ? Vous volez des touristes maintenant ? »
+      </p>
+      <p>
+        Le pirate le frappe sans hésiter.
+      </p>
+      <p class="small">
+        Mauvais souvenir. Mauvais choix.
+      </p>
+      <button onclick="go('menace_arme')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== OBSERVATION ===== */
+  if (state.scene === "observer_silence") {
+    state.flags.calme = true;
+    show(`
+      <p>
+        Conrad baisse les yeux.
+      </p>
+      <p>
+        Il repère les mouvements, les armes,
+        la passerelle menant au pont inférieur.
+      </p>
+      <button onclick="go('menace_arme')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== MENACE ===== */
+  if (state.scene === "menace_arme") {
+    show(`
+      <p>
+        Le chef pirate appuie le canon de son arme sur la tempe d’Alex.
+      </p>
+      <p>
+        Conrad sent la panique monter.
+      </p>
+
+      <button onclick="go('qte_intervention')">
+        Intervenir
+      </button>
+
+      <button onclick="go('laisser_faire')">
+        Ne rien faire
+      </button>
+    `);
+    return;
+  }
+
+  /* ===== CHOIX CRUCIAL ===== */
+  if (state.scene === "laisser_faire") {
+    state.flags.culpabilite = true;
+    show(`
+      <p>
+        Le coup part.
+      </p>
+      <p>
+        Alex s’effondre, blessé mais vivant.
+      </p>
+      <p class="small">
+        Cette image hantera Conrad.
+      </p>
+      <button onclick="go('cargo_exploration')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_intervention") {
+    qte("intervention_reussie", "intervention_ratee", 900);
+    return;
+  }
+
+  if (state.scene === "intervention_ratee") {
+    die(`
+      Conrad se jette en avant.
+      Trop lent.
+      Le coup est mortel.
+      L’héroïsme n’efface pas l’imprudence.
+    `);
+    return;
+  }
+
+  if (state.scene === "intervention_reussie") {
+    state.flags.heros = true;
+    show(`
+      <p>
+        Conrad désarme le pirate.
+      </p>
+      <p>
+        Le chaos éclate.
+      </p>
+      <button onclick="go('cargo_exploration')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== EXPLORATION DU CARGO ===== */
+  if (state.scene === "cargo_exploration") {
+    show(`
+      <p>
+        Les couloirs du cargo sont sombres.
+      </p>
+      <p>
+        Des bruits résonnent…
+        ou peut-être est-ce seulement dans sa tête.
+      </p>
+
+      <button onclick="go('suivre_bruit')">
+        Suivre le bruit
+      </button>
+
+      <button onclick="go('rejoindre_famille')">
+        Rejoindre les autres
+      </button>
+    `);
+    return;
+  }
+
       <button onclick="go('menu')">Retour menu (temporaire)</button>
     `);
     return;
