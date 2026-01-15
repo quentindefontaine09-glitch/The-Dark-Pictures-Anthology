@@ -115,6 +115,8 @@ function startCharacter(char) {
     juliaTrust: 0,
     bravado: 0,
     blessure: false
+    startMusic();
+
   };
   play();
 }
@@ -123,6 +125,9 @@ function startCharacter(char) {
 // QTE SOURIS
 // ============================
 function qte(success, fail) {
+  qteSound.currentTime = 0;
+qteSound.play();
+
   show(`
     <p>AGIS VITE</p>
     <div class="qte" onclick="next('${success}')"></div>
@@ -360,6 +365,109 @@ break;
 
 case "mort_chute_finale":
   die("Le saut était trop risqué. Conrad s’est écrasé contre la coque.");
+break;
+case "plongee":
+  show(`
+    <p>L’eau engloutit le monde.
+    Sous toi, l’épave du cargo repose comme un cercueil ouvert.</p>
+    <button onclick="next('interieur')">Entrer dans l'épave</button>
+  `);
+break;
+
+case "interieur":
+  show(`
+    <p>À l’intérieur, l’air est lourd.
+    Le métal grince, comme si le navire respirait.</p>
+    <button onclick="next('dialogue_julia2')">Avancer</button>
+  `);
+break;
+
+case "dialogue_julia2":
+  if (state.flags.juliaTrust > 0) {
+    show(`
+      <p><strong>Julia :</strong> "Je… je te fais confiance, Conrad."</p>
+      <button onclick="next('hallucination')">Continuer</button>
+    `);
+  } else {
+    show(`
+      <p>Le silence est pesant.
+      Julia reste à distance.</p>
+      <button onclick="next('hallucination')">Continuer</button>
+    `);
+  }
+break;
+
+case "hallucination":
+  show(`
+    <p>Ton reflet dans une vitre te sourit.
+    Il ne bouge pas quand tu bouges.</p>
+    <button onclick="qteRandom('panic_control','mort_folie')">
+      Détourner le regard
+    </button>
+  `);
+break;
+
+case "panic_control":
+  show(`
+    <p>Tu reprends le contrôle.
+    Mais tu sais que quelque chose t’observe.</p>
+    <button onclick="next('course')">Avancer</button>
+  `);
+break;
+
+case "course":
+  show(`
+    <p>Des pas résonnent derrière toi.
+    Les pirates sont proches.</p>
+    <button onclick="qteRandom('trappe','mort_capture')">
+      Courir
+    </button>
+  `);
+break;
+
+case "trappe":
+  show(`
+    <p>Tu te jettes dans une trappe.
+    L’obscurité est totale.</p>
+    <button onclick="next('decision_finale')">Te relever</button>
+  `);
+break;
+
+case "decision_finale":
+  show(`
+    <p>Une échelle mène vers le pont.
+    Une autre vers les cales inondées.</p>
+    <button onclick="next('pont')">Monter</button>
+    <button onclick="next('cales')">Descendre</button>
+  `);
+break;
+
+case "pont":
+  if (state.flags.blessure) {
+    die("Blessé, Conrad n’a pas pu grimper assez vite. Les pirates l’ont rattrapé.");
+  } else {
+    show(`
+      <p>Le vent fouette ton visage.
+      Un bateau de secours est visible au loin.</p>
+      <button onclick="next('fin_survie')">Appeler à l’aide</button>
+    `);
+  }
+break;
+
+case "cales":
+  die("Les cales se remplissent d’eau. Conrad s’y est noyé, seul.");
+break;
+
+case "fin_survie":
+  show(`
+    <h2>CONRAD A SURVÉCU</h2>
+    <p>Le jour se lève sur la mer.
+    Le Conservateur ferme lentement son livre.</p>
+  `);
+break;
+
+case "mort_folie":
+  die("Les hallucinations ont pris le dessus. Conrad a perdu toute notion de réalité.");
 break;
 
 }
