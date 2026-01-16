@@ -1985,6 +1985,154 @@ function playAndrew() {
         Les choix décideront de la vérité…
         ou du mensonge mortel. Chaque instant vous sera peut-être fatal.
       </p>
+      <button onclick="go('nuit_demons')">Continuer</button>
+    `);
+    return;
+  }
+  /* ===== RETOUR DES DÉMONS ===== */
+  if (state.scene === "nuit_demons") {
+    show(`
+      <p>
+        Le brouillard s’épaissit.
+      </p>
+      <p>
+        Les cloches sonnent.
+      </p>
+      <p>
+        Les démons reviennent.
+      </p>
+
+      <button onclick="go('demon_pendu_final')">
+        Continuer
+      </button>
+    `);
+    return;
+  }
+
+  /* ===== DÉMON PENDU ===== */
+  if (state.scene === "demon_pendu_final") {
+    show(`
+      <p>
+        La corde tombe du ciel.
+      </p>
+      <button onclick="go('qte_pendu_final')">Fuir</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_pendu_final") {
+    qte("survie_pendu", "mort_pendu_final", 3000);
+    return;
+  }
+
+  if (state.scene === "mort_pendu_final") {
+    die(`
+      La corde se resserre.
+      Taylor est pendu avec Andrew.
+    `);
+    return;
+  }
+
+  /* ===== DÉMON ENCHAÎNÉ ===== */
+  if (state.scene === "survie_pendu") {
+    show(`
+      <p>
+       Taylor mord la longue langue du démon pendu qui tentait d'étrangler Andrew, quitte a sacrifier son rouge à lèvre.
+       Elle a combattu son démon.
+       Mais les chaînes claquent...
+      </p>
+      <button onclick="go('qte_enchaine_final')">Résister</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_enchaine_final") {
+    qte("survie_enchaine", "mort_enchaine_final", 3000);
+    return;
+  }
+
+  if (state.scene === "mort_enchaine_final") {
+    die(`
+      Les chaînes l’écrasent.
+      Le feu le consume avec Angela.
+    `);
+    return;
+  }
+
+  /* ===== DÉMON EMPALÉ ===== */
+  if (state.scene === "survie_enchaine") {
+    show(`
+      <p>
+       Angela attrape son déodorant spray ainsi que son briquet et les utilisent...
+       comme lance-flamme face au démon enchaîné qui s'en prenait à Andrew.
+       Elle a combattu son démon.
+       Mais une barre transperce le sol.
+      </p>
+      <button onclick="go('qte_empale_final')">Esquiver</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_empale_final") {
+    qte("survie_empale_final", "mort_empale_final", 650);
+    return;
+  }
+
+  if (state.scene === "mort_empale_final") {
+    die(`
+      La barre les transperces.
+      Le passé l’achève avec Daniel.
+    `);
+    return;
+  }
+
+  /* ===== DÉMON ÉCRASÉ ===== */
+  if (state.scene === "survie_empale_final") {
+    show(`
+      <p>
+       Daniel se décide à agir et enfonce un couteau dans le coeur du démon empalé qui s'en prenait à Andrew.
+       Il a combattu son démon.
+       Mais le sol tremble.
+      </p>
+      <p>
+        Une créature écrasée qui ressemble à John rampe vers Andrew.
+      </p>
+
+      <button onclick="go('qte_ecrase')">
+        Courir
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_ecrase") {
+    qte("avant_decision_finale", "mort_ecrase", 2000);
+    return;
+  }
+
+  if (state.scene === "mort_ecrase") {
+    die(`
+      Le poids l’écrase.
+      Andrew disparaît sous les décombres, écrasé avec John.
+    `);
+    return;
+  }
+
+  /* ===== AVANT LA DÉCISION ===== */
+  if (state.scene === "avant_decision_finale") {
+    show(`
+      <p>
+       John prend son courage à deux mains et jette une pierre sur le démon écrasé qui s'approchait d'Andrew.
+       Il a combattu son démon.
+       Mais tous les démons s’arrêtent.
+      </p>
+      <p>
+        La petite fille apparaît devant le groupe.
+      </p>
+      <p class="small">
+       Le conservateur - "Le prochain choix décidera si tout le monde vit…
+        ou meurt.
+      </p>
       <button onclick="go('menu')">Retour menu</button>
     `);
     return;
