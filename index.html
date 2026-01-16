@@ -179,7 +179,8 @@ function playConrad() {
         Un homme élégant referme lentement un ouvrage.
       </p>
       <p><em>
-        « Ah… Conrad.  
+        « Bonjour, je suis le conservateur, gardien des récits. Je suis là pour noter tout ce que vous faites. Vous avez choisi ?
+        Ah… Conrad.  
         Un jeune homme persuadé que le danger n’est qu’un jeu.
         Voyons si vous saurez tourner les pages… sans les déchirer. »
       </em></p>
@@ -931,6 +932,165 @@ function playConrad() {
         Le Conservateur tourne lentement une page.
         "Vous êtes nul... Mais c'est interessant de voir vos pathétique tentatives pour rester en vie."
       </p>
+  <button onclick="go('salle_machines')">Continuer</button>
+    `);
+    return;
+  }
+  /* ===== SALLE DES MACHINES ===== */
+  if (state.scene === "salle_machines") {
+    show(`
+      <p>
+        Le bruit métallique est assourdissant.
+      </p>
+      <p>
+        Des chaînes pendent au plafond.
+        Des ombres bougent dans la vapeur.
+      </p>
+      <p>
+        Conrad aperçoit Danny, l’un des pirates.
+      </p>
+      <p>
+        Il semble… terrifié.
+      </p>
+
+      <button onclick="go('parler_danny')">
+        Lui parler
+      </button>
+
+      <button onclick="go('observer_danny')">
+        Observer à distance
+      </button>
+    `);
+    return;
+  }
+
+  /* ===== DANNY ===== */
+  if (state.scene === "parler_danny") {
+    show(`
+      <p>
+        « Hé ! Tout va bien ? »
+      </p>
+      <p>
+        Danny recule pendant que Fliss et Julia observent la scène de loin.
+      </p>
+      <p>
+        « Ils sont partout… ils nous regardent… »
+      </p>
+      <button onclick="go('apparition_danny')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "observer_danny") {
+    show(`
+      <p>
+        Danny parle seul.
+      </p>
+      <p>
+        Ses mains tremblent.
+      </p>
+      <button onclick="go('apparition_danny')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== MORT DE DANNY ===== */
+  if (state.scene === "apparition_danny") {
+    show(`
+      <p>
+        Une silhouette surgit derrière Danny.
+      </p>
+      <p>
+        Un marin difforme, le visage distordu, une sorte de zombie.
+      </p>
+      <p>
+        Danny hurle.
+      </p>
+
+      <button onclick="go('qte_danny')">
+        Tenter d’intervenir
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_danny") {
+    qte("danny_sauve", "danny_meurt", 800);
+    return;
+  }
+
+  if (state.scene === "danny_meurt") {
+    state.flags.temoin_mort = true;
+    show(`
+      <p>
+        Conrad n’est pas assez rapide.
+      </p>
+      <p>
+        Danny est projeté contre une barre métallique.
+      </p>
+      <p>
+        Son corps s’empale violemment.
+      </p>
+      <p class="small">
+        Danny est mort. Conrad, Julia et Fliss semblent sous le choc.
+        Son sang éclabousse le sol du couloir du cargo. 
+      </p>
+      <button onclick="go('choc_psy')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "danny_sauve") {
+    show(`
+      <p>
+        Conrad tire Danny en arrière.
+      </p>
+      <p>
+        La créature disparaît.
+      </p>
+      <p>
+        Danny s’enfuit en hurlant.
+      </p>
+      <p class="small">
+        Vous ignorez s’il survivra.
+      </p>
+      <button onclick="go('choc_psy')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== CONSÉQUENCES PSY ===== */
+  if (state.scene === "choc_psy") {
+    show(`
+      <p>
+        Conrad est secoué pendant que Fliss tente de réconforter Julia qui s'est mise à pleurer.
+      </p>
+      <p>
+        Ce qu’ils ont vu semblait réel.
+        Trop réel.
+      </p>
+
+      <button onclick="go('continuer_cargo')">
+        Continuer à avancer
+      </button>
+    `);
+    return;
+  }
+
+  /* ===== FIN DES 2/3 ===== */
+  if (state.scene === "continuer_cargo") {
+    show(`
+      <p>
+        Le cargo révèle enfin son secret.
+      </p>
+      <p>
+        Quelque chose est à l’origine de tout cela.
+      </p>
+      <p class="small">
+        Le Conservateur ferme son livre un instant.
+        « Intéressant… Je peux peut-être vous donner un indice : Tout ce qui brille n'est pas or.
+        Vous me suivez ? Non ? toujours trop lent. Bonne chance pour l'acte 3.»
+      </p>
       <button onclick="go('menu')">Retour menu</button>
     `);
     return;
@@ -1225,7 +1385,158 @@ function playAndrew() {
       </p>
       <p class="small">
         Le Conservateur esquisse un sourire discret.
-        " Alors ? Vous l'avez trouvé ? Le chauffeur de bus. Non ? Alors la partie 1 se termine sur un mystère : Quand pardonnerez-vous votre passé ?"
+        " Alors ? Vous l'avez trouvé ? Le chauffeur de bus. Non ?
+        Alors la partie 1 se termine sur un mystère : Quand pardonnerez-vous votre passé ?"
+      </p>
+   <button onclick="go('cimetiere')">Continuer</button>
+    `);
+    return;
+  }
+  /* ===== CIMETIÈRE ===== */
+  if (state.scene === "cimetiere") {
+    show(`
+      <p>
+       Le groupe arrive au cimetiere de Little Hope, les tombes émergent du brouillard.
+      </p>
+      <p>
+        Une corde grince au vent.
+      </p>
+      <p>
+        Andrew lève les yeux.
+      </p>
+
+      <button onclick="go('demon_pendu')">
+        Regarder
+      </button>
+    `);
+    return;
+  }
+
+  /* ===== DÉMON PENDU ===== */
+  if (state.scene === "demon_pendu") {
+    show(`
+      <p>
+        Un corps pend à l’arbre.
+      </p>
+      <p>
+        Son cou est brisé. Un démon qui ressemble à Taylor.
+      </p>
+      <p>
+        Il ouvre les yeux.
+      </p>
+
+      <button onclick="go('qte_fuite_pendu')">
+        Fuir
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_fuite_pendu") {
+    qte("echappe_pendu", "mort_pendu", 3000);
+    return;
+  }
+
+  if (state.scene === "mort_pendu") {
+    die(`
+      Andrew reste figé.
+      Le démon pendu se balance vers lui.
+      Sa longue langue se referme autour du coup de Taylor pendant qu'Andrew... Perd espoir.
+    `);
+    return;
+  }
+
+  /* ===== DÉMON ENCHAÎNÉ ===== */
+  if (state.scene === "echappe_pendu") {
+    show(`
+      <p>
+        Plus loin, des chaînes raclent le sol.
+      </p>
+      <p>
+        Une silhouette traîne un corps brûlé. Un démon ressemblant à Angela.
+      </p>
+
+      <button onclick="go('demon_enchaine')">
+        Affronter
+      </button>
+
+      <button onclick="go('fuir_enchaine')">
+        Fuir
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "demon_enchaine") {
+    state.flags.courage = true;
+    show(`
+      <p>
+        Le démon hurle.
+      </p>
+      <p>
+        Les chaînes s’enroulent autour d’Angela qui hurle.
+      </p>
+      <button onclick="go('qte_chaine')">Se libérer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_chaine") {
+    qte("libere", "mort_enchaine", 3000);
+    return;
+  }
+
+  if (state.scene === "mort_enchaine") {
+    die(`
+      Les chaînes se resserrent.
+      Le feu consume Angela lentement pendant qu'Andrew... perd espoir.
+    `);
+    return;
+  }
+
+  /* ===== DÉMON EMPALÉ ===== */
+  if (state.scene === "libere" || state.scene === "fuir_enchaine") {
+    show(`
+      <p>
+        Un hurlement déchire la nuit.
+      </p>
+      <p>
+        Une créature empalée avance,
+        tirée par une barre métallique. Un démon qui ressemble à Daniel
+      </p>
+
+      <button onclick="go('qte_empale')">
+        Esquiver
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_empale") {
+    qte("survie_empale", "mort_empale", 3000);
+    return;
+  }
+
+  if (state.scene === "mort_empale") {
+    die(`
+      Daniel trébuche.
+      La barre le transperce.
+      Le passé réclame son dû pendant qu'Andrew... perd espoir.
+    `);
+    return;
+  }
+
+  /* ===== FIN DE CHAPITRE ===== */
+  if (state.scene === "survie_empale") {
+    show(`
+      <p>
+        Les démons disparaissent.
+      </p>
+      <p>
+        Le groupe est en état de choc mais vivant.
+      </p>
+      <p class="small">
+        Little Hope ne pardonne jamais. Nos démon refont toujours surface.
       </p>
       <button onclick="go('menu')">Retour menu</button>
     `);
