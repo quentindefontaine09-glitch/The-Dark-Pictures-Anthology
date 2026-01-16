@@ -2223,61 +2223,140 @@ function playAndrew() {
   }
 
 }
-
-
 function playRachel() {
 
-  if (state.scene === "intro") {
+  /* ===== DÉSERT IRAKIEN ===== */
+  if (state.scene === "intro_rachel") {
     show(`
-      <h2>Le Conservateur</h2>
       <p>
-        « La guerre révèle ce que l’homme a de plus sombre…
-        et ce qui rampe sous la terre. Je ne suis pas censé vous aiser mais... Restez concentrer. Le danger peut apparaître à tout moment.»
+    Le conservateur - "Bonne chance pour celui-ci... un coneil : le danger peut survenir à tout moment."
+        Le désert est silencieux.
       </p>
-      <button onclick="go('chute')">Continuer</button>
+      <p>
+        L’hélicoptère vrombit au-dessus des dunes.
+      </p>
+      <p>
+        Rachel King observe le sol.
+      </p>
+      <p class="small">
+        Mission de reconnaissance d'un commando américain en Irak pendant la guerre de 2003.
+        Rien ne devait mal tourner.
+      </p>
+
+      <button onclick="go('dialogue_equipage')">
+        Continuer
+      </button>
     `);
     return;
   }
 
-  if (state.scene === "chute") {
+  /* ===== PERSONNAGES SECONDAIRES ===== */
+  if (state.scene === "dialogue_equipage") {
     show(`
       <p>
-        Le sol s’effondre.
+        Eric, le mari de Rachel, ajuste son casque.
       </p>
       <p>
-        Rachel tombe dans l’obscurité avec son pistolet. Son commando envoyé dans les monts Zagros en Irak en 2003 ne doivent pas être loin.
+        Nick, l'amant secret de Rachel, vérifie son arme.
       </p>
-      <button onclick="go('qte_atterrissage')">Se protéger</button>
+      <p>
+        Jason, le suprémaciste blanc de l'équipe, plaisante nerveusement.
+      </p>
+      <p>
+        Salim, le prisonnier Irakien, observe en silence.
+      </p>
+
+      <button onclick="go('choix_rachel_relation')">
+        Répondre à Eric
+      </button>
+
+      <button onclick="go('ignorer_eric')">
+        Rester professionnelle
+      </button>
     `);
     return;
   }
 
-  if (state.scene === "qte_atterrissage") {
-    qte("vivante", "mort", 4000);
+  if (state.scene === "choix_rachel_relation") {
+    state.flags.relation_eric = true;
+    show(`
+      <p>
+        Rachel sourit brièvement.
+      </p>
+      <p>
+        Eric semble soulagé.
+      </p>
+      <button onclick="go('attaque_souterraine')">Continuer</button>
+    `);
     return;
   }
 
-  if (state.scene === "mort") {
+  if (state.scene === "ignorer_eric") {
+    state.flags.distance = true;
+    show(`
+      <p>
+        Rachel détourne le regard.
+      </p>
+      <p>
+        La tension est palpable. Eric est surpris par la réaction de Rachel.
+      </p>
+      <button onclick="go('attaque_souterraine')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== ATTAQUE ===== */
+  if (state.scene === "attaque_souterraine") {
+    show(`
+      <p>
+       L'hélico se pose lorsque Le sol se mit à trembler.
+      </p>
+      <p>
+        Une fissure s’ouvre.
+      </p>
+      <p>
+        L’équipe chute dans l’obscurité d'une grotte inconnu.
+      </p>
+
+      <button onclick="go('qte_chute_rachel')">
+        Se protéger
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_chute_rachel") {
+    qte("survie_chute", "mort_chute_rachel", 750);
+    return;
+  }
+
+  if (state.scene === "mort_chute_rachel") {
     die(`
-      L’impact est fatal. Une créature ailée vous capture pour vous dévorer.
-      Même les soldats d’élite tombent.
+      Rachel heurte violemment le sol, sa tête s'écrase sur un stalagmite.
+      La mission s’arrête ici.
     `);
     return;
   }
 
-  if (state.scene === "vivante") {
+  /* ===== DÉBUT DE L’HORREUR ===== */
+  if (state.scene === "survie_chute") {
     show(`
       <p>
-        Rachel se relève. "Putain mais c'était quoi ce truc ?! Mailman 2-1 Actual, vous me recevez ?!"
+       Rachel retombe de manière absolument badasse tel captaine america sous steroïdes.
+       Mais des bruits résonnent dans les tunnels.
       </p>
       <p>
-        Aucun signal depuis la radio. Des bruits inhumains résonnent dans le fond de la grotte.
+        Quelque chose bouge.
+      </p>
+      <p class="small">
+        L’ennemi n’est pas humain.
       </p>
       <button onclick="go('menu')">Retour menu</button>
     `);
     return;
   }
 }
+
 
 function playKate() {
 
