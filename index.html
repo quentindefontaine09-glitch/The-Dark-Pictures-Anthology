@@ -90,10 +90,10 @@ function go(scene) {
 function menu() {
   show(`
     <h1>The Dark Pictures</h1>
-    <button onclick="startCharacter('conrad')">Conrad – Man of Medan</button>
-    <button onclick="startCharacter('andrew')">Andrew – Little Hope</button>
-    <button onclick="startCharacter('rachel')">Rachel – House of Ashes</button>
-    <button onclick="startCharacter('kate')">Kate – The Devil In Me</button>
+    <button onclick="startCharacter('conrad')">Conrad – Man of Medan (Niv 1)</button>
+    <button onclick="startCharacter('andrew')">Andrew – Little Hope (Niv2)</button>
+    <button onclick="startCharacter('rachel')">Rachel – House of Ashes (Niv3)</button>
+    <button onclick="startCharacter('kate')">Kate – The Devil In Me (Niv4)</button>
   `);
 }
 
@@ -738,14 +738,204 @@ function playConrad() {
         Que pensez-vous de notre intriguante Fliss ? Est-ce qu'elle vous aime secrètement ou vous déteste ?
         Sans compter tous nos disparus. Arriverez-vous à les retrouver... vivant ?"
       </p>
-      <button onclick="go('menu')">
-        Retour menu (chapitre suivant à venir)
-      </button>
-      
-      <button onclick="go('menu')">Retour menu (temporaire)</button>
+      <button onclick="go('rejoindre_famille')">Continuer</button>
     `);
     return;
   }
+    /* ===== COULOIR DU CARGO ===== */
+  if (state.scene === "rejoindre_famille") {
+    show(`
+      <p>
+        Conrad et Fliss rejoignent Julia.
+      </p>
+      <p>
+        Les couloirs métalliques grincent à chaque pas.
+        Une odeur de moisissure flotte dans l’air.
+      </p>
+      <p>
+        Julia chuchote :
+        « J’ai cru voir quelqu’un… »
+      </p>
+
+      <button onclick="go('rassurer_julia')">
+        Rassurer Julia
+      </button>
+
+      <button onclick="go('se_moquer_peur')">
+        Se moquer
+      </button>
+    `);
+    return;
+  }
+
+  /* ===== DIALOGUE JULIA ===== */
+  if (state.scene === "rassurer_julia") {
+    state.flags.protecteur = true;
+    show(`
+      <p>
+        Conrad pose une main sur son épaule.
+      </p>
+      <p>
+        « On reste ensemble. Rien ne nous arrivera. »
+      </p>
+      <p class="small">
+        Julia vous fera davantage confiance.
+      </p>
+      <button onclick="go('bruit_soudain')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "se_moquer_peur") {
+    state.flags.insensible = true;
+    show(`
+      <p>
+        « Sérieusement ? Tu paniques pour des bruits ? La chose la plus flipante ici, c'est le tétanos et l'humeur de l'autre taré de pirate. »
+      </p>
+      <p>
+        Julia se ferme immédiatement.
+      </p>
+      <button onclick="go('bruit_soudain')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== PEUR ===== */
+  if (state.scene === "bruit_soudain") {
+    show(`
+      <p>
+        Un fracas résonne derrière eux.
+      </p>
+      <p>
+        Une silhouette traverse le couloir. Une femme dans un costume de matelot de la seconde guerre prenant des poses provocantes
+      </p>
+
+      <button onclick="go('qte_poursuite')">
+        Courir après
+      </button>
+
+      <button onclick="go('rester_groupe')">
+        Rester avec le groupe
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_poursuite") {
+    qte("poursuite_ok", "poursuite_rate", 4000);
+    return;
+  }
+
+  if (state.scene === "poursuite_rate") {
+    die(`
+      Conrad glisse sur le sol humide.
+      La silhouette se retourne.
+      Cette fois, elle est bien réelle.
+      Mais ce n'est pas une femme mais Olson qui s'avance vers lui avec une masse et les yeux rouges sang. C'est terminé.
+    `);
+    return;
+  }
+
+  if (state.scene === "poursuite_ok") {
+    show(`
+      <p>
+        Conrad atteint le coin du couloir.
+      </p>
+      <p>
+        Il n’y a rien.
+      </p>
+      <p class="small">
+        Était-ce seulement une hallucination ?
+      </p>
+      <button onclick="go('decision_leader')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "rester_groupe") {
+    show(`
+      <p>
+        Conrad serre les poings.
+      </p>
+      <p>
+        Personne ne se sépare.
+      </p>
+      <button onclick="go('decision_leader')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== LEADERSHIP ===== */
+  if (state.scene === "decision_leader") {
+    show(`
+      <p>
+        Fliss vous regarde.
+      </p>
+      <p>
+       Fliss - « On a besoin d’un plan. »
+      </p>
+
+      <button onclick="go('prendre_commande')">
+        Prendre le commandement
+      </button>
+
+      <button onclick="go('laisser_fliss')">
+        Laisser Fliss décider
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "prendre_commande") {
+    state.flags.leader = true;
+    show(`
+      <p>
+        Conrad inspire profondément.
+      </p>
+      <p>
+        « On avance lentement. Pas de panique. On va trouver Alex et se tirer de là.
+        Et n'oublie pas d'embrasser ton chevalier servant si on s'en sort vivant. »
+      </p>
+      <p class="small">
+        Les autres compteront sur vous.
+      </p>
+      <button onclick="go('fin_chapitre_conrad2')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "laisser_fliss") {
+    state.flags.suiveur = true;
+    show(`
+      <p>
+        Fliss hoche la tête.
+      </p>
+      <p>
+        Vous sentez son regard peser sur vous tandis qu'elle passe devant.
+      </p>
+      <button onclick="go('fin_chapitre_conrad2')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== FIN CHAPITRE ===== */
+  if (state.scene === "fin_chapitre_conrad2") {
+    show(`
+      <p>
+        Quelque chose vous suit.
+      </p>
+      <p>
+        Mais personne n’ose se retourner.
+      </p>
+      <p class="small">
+        Le Conservateur tourne lentement une page.
+        "Vous êtes nul... Mais c'est interessant de voir vos pathétique tentatives pour rester en vie."
+      </p>
+      <button onclick="go('menu')">Retour menu</button>
+    `);
+    return;
+  }
+
 }
 function playAndrew() {
 
@@ -806,7 +996,7 @@ function playAndrew() {
   }
 
   if (state.scene === "qte_pas") {
-    qte("groupe_rejoint", "attaque", 900);
+    qte("groupe_rejoint", "attaque", 3000);
     return;
   }
 
@@ -882,10 +1072,166 @@ function playAndrew() {
         Little Hope ne vous laissera pas partir si facilement. Vos démons vous rattrapent... Toujours.
         Taylor et son égoïsme, Daniel et sa paresse, John et sa soif de savoir, Angela et sa colère... Andrew et son crime.
       </p>
+ <button onclick="go('route_brumeuse')">Continuer</button>
+    `);
+    return;
+  }
+    /* ===== ROUTE BRUMEUSE ===== */
+  if (state.scene === "route_brumeuse") {
+    show(`
+      <p>
+        Le groupe avance sur la route déserte, John en tête.
+      </p>
+      <p>
+        Les maisons de Little Hope surgissent de la brume. La ville semble abandonnée depuis quelques décennies.
+      </p>
+      <p>
+        Taylor s’arrête soudain.
+      </p>
+      <p>
+       Taylor - « Vous avez entendu ça ? Angela va voir ! Quoi ? J'ai pas vraiment envie d'y passer... »
+      </p>
+
+      <button onclick="go('inspecter_bruit')">
+        Inspecter
+      </button>
+
+      <button onclick="go('continuer_route')">
+        Continuer
+      </button>
+    `);
+    return;
+  }
+
+  /* ===== CHOIX ===== */
+  if (state.scene === "inspecter_bruit") {
+    show(`
+      <p>
+        Daniel s’avance prudemment.
+      </p>
+      <p>
+        Une silhouette pendue apparaît dans la brume.
+      </p>
+      <p>
+        Elle ressemble à… Taylor.
+      </p>
+
+      <button onclick="go('qte_choc')">
+        Reculer
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_choc") {
+    qte("choc_ok", "choc_rate", 3000);
+    return;
+  }
+
+  if (state.scene === "choc_rate") {
+    die(`
+      Andrew et Daniel restent figés.
+      Le passé se referme sur eux Tandis que le démon pendu enroule sa longue langue autour du cou de Taylor.
+    `);
+    return;
+  }
+
+  if (state.scene === "choc_ok") {
+    state.flags.trauma = true;
+    show(`
+      <p>
+        L’apparition disparaît.
+      </p>
+      <p>
+        Angela hurle "Ouais c'est ça tire-toi ou j'envoie Daniel te défonce la gueule !".
+      </p>
+      <button onclick="go('tensions_groupe')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "continuer_route") {
+    show(`
+      <p>
+        Vous ignorez les bruits.
+      </p>
+      <p>
+        Mais la tension est palpable.
+      </p>
+      <button onclick="go('tensions_groupe')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== TENSIONS ===== */
+  if (state.scene === "tensions_groupe") {
+    show(`
+      <p>
+        John et Angela se disputent.
+      </p>
+      <p>
+        Daniel regarde Andrew.
+      </p>
+      <p>
+       Daniel - « On doit rester soudés mais Taylor n'arrête pas de me demander de l'aide.
+       J'ai plus envie de rien faire pour eux... Mon pote ? Alors tu te souvient de vraiment rien ?»
+      </p>
+
+      <button onclick="go('calmer_groupe')">
+        Calmer le groupe
+      </button>
+
+      <button onclick="go('prendre_parti')">
+        Prendre parti
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "calmer_groupe") {
+    state.flags.mediator = true;
+    show(`
+      <p>
+        Andrew élève la voix. " Taisez-vous ! C'est pas en se comportant comme ça qu'on trouvera de l'aide !
+        Les téléphones ne marchent pas et un truc bizarre nous a suivi alors c'est pas le moment de vous diviser !"
+      </p>
+      <p>
+        Le groupe se calme. Une lueur de respect apparait dans les yeux d'Angela pendant que John reprend son ton autoritaire face au groupe.
+      </p>
+      <button onclick="go('fin_chapitre_andrew1')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "prendre_parti") {
+    state.flags.division = true;
+    show(`
+      <p>
+        Les regards se durcissent pendant qu'Andrew critique leurs manières de faire face aux problèmes relationnel.
+      </p>
+      <p>
+        La confiance se fissure.
+      </p>
+      <button onclick="go('fin_chapitre_andrew1')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== FIN CHAPITRE ===== */
+  if (state.scene === "fin_chapitre_andrew1") {
+    show(`
+      <p>
+        Little Hope vous observe.
+      </p>
+      <p class="small">
+        Le Conservateur esquisse un sourire discret.
+        " Alors ? Vous l'avez trouvé ? Le chauffeur de bus. Non ? Alors la partie 1 se termine sur un mystère : Quand pardonnerez-vous votre passé ?"
+      </p>
       <button onclick="go('menu')">Retour menu</button>
     `);
     return;
   }
+
 }
 
 
