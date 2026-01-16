@@ -746,67 +746,135 @@ function playConrad() {
 }
 function playAndrew() {
 
+  /* ===== CONSERVATEUR ===== */
   if (state.scene === "intro") {
     show(`
       <h2>Le Conservateur</h2>
       <p>
-        « Certains hommes portent le poids du passé…
-        même quand il n’existe que dans leur esprit. »
+        « Certains hommes cherchent des réponses.
+        D’autres fuient les questions. »
+      </p>
+      <p>
+        « Andrew…  
+        votre route est pavée de regrets. »
       </p>
       <button onclick="go('bus_crash')">Continuer</button>
     `);
     return;
   }
 
+  /* ===== ACCIDENT ===== */
   if (state.scene === "bus_crash") {
     show(`
       <p>
-        Le bus gît sur le bas-côté, Andrew se réveille sans aucun souvenir, complètement sonné.
+        Le bus est éventré.
       </p>
       <p>
-        Le brouillard enveloppe la ville abandonnée de Little Hope.
+        Le brouillard étouffe le son.
       </p>
       <p>
-        Andrew voit deux personnes qui viennent vers lui.
-        John - "Andrew ! Tu vas bien ?"
-        Taylor - "Andrew ! Le prof et moi on cherche Angela et Daniel. Tu sais où ils sont ?
-                  Le bus s'est renversé et tout le monnde a sisparu ! Même le chauffeur !"
+        Andrew se relève, désorienté.
       </p>
-      <button onclick="go('cri_lointain')">Explorer</button>
+
+      <button onclick="go('rejoindre_groupe')">
+        Appeler les autres
+      </button>
+
+      <button onclick="go('explorer_seul')">
+        Explorer seul
+      </button>
     `);
     return;
   }
 
-  if (state.scene === "cri_lointain") {
+  /* ===== CHOIX INITIAL ===== */
+  if (state.scene === "explorer_seul") {
+    state.flags.solitaire = true;
     show(`
       <p>
-        Un cri résonne dans la brume. Taylor et John tournent sur eux-mêmes, cherchant d'où ça provient.
+        Andrew avance seul.
       </p>
-      <button onclick="go('qte_panique')">Courir</button>
+      <p>
+        Une silhouette le suit dans la brume.
+      </p>
+      <button onclick="go('qte_pas')">Se retourner</button>
     `);
     return;
   }
 
-  if (state.scene === "qte_panique") {
-    qte("calme", "panique", 4000);
+  if (state.scene === "qte_pas") {
+    qte("groupe_rejoint", "attaque", 900);
     return;
   }
 
-  if (state.scene === "panique") {
+  if (state.scene === "attaque") {
     die(`
-      Andrew fuit droit dans la forêt, laissant John et Taylor hurlants derrière.
-      Certaines culpabilités ne laissent aucune échappatoire. Andrew se perdra dans l'immense forêt entourant la ville.
+      Andrew se retourne trop tard.
+      Le passé le rattrape.
     `);
     return;
   }
 
-  if (state.scene === "calme") {
+  /* ===== GROUPE ===== */
+  if (state.scene === "rejoindre_groupe" || state.scene === "groupe_rejoint") {
     show(`
       <p>
-        Andrew respire.
+        Andrew retrouve les autres.
       </p>
       <p>
-        Une silhouette l’observe.
+        John tente de garder son calme.
+        Angela panique.
+        Daniel observe les alentours.
+      </p>
+
+      <button onclick="go('dialogue_angela')">
+        Rassurer Angela
+      </button>
+
+      <button onclick="go('dialogue_john')">
+        Écouter John
+      </button>
+    `);
+    return;
+  }
+
+  /* ===== DIALOGUES ===== */
+  if (state.scene === "dialogue_angela") {
+    state.flags.empathie = true;
+    show(`
+      <p>
+        Angela tremble.
+      </p>
+      <p>
+        « J’ai l’impression qu’on n’est pas seuls… »
+      </p>
+      <button onclick="go('fin_debut')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "dialogue_john") {
+    state.flags.logique = true;
+    show(`
+      <p>
+        John veut comprendre.
+      </p>
+      <p>
+        « Cette ville cache quelque chose. »
+      </p>
+      <button onclick="go('fin_debut')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== FIN DÉBUT ===== */
+  if (state.scene === "fin_debut") {
+    show(`
+      <p>
+        Le brouillard se referme derrière vous.
+      </p>
+      <p class="small">
+        Little Hope ne vous laissera pas partir si facilement.
       </p>
       <button onclick="go('menu')">Retour menu</button>
     `);
