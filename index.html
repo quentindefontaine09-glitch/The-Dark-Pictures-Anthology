@@ -1238,6 +1238,182 @@ function playConrad() {
       <p class="small">
         (La prochaine scène est la GRANDE FIN)
       </p>
+   <button onclick="go('final_explosion')">Continuer</button>
+    `);
+    return;
+  }
+  /* ===== EXPLOSION DU GAZ ===== */
+  if (state.scene === "final_explosion") {
+    show(`
+      <p>
+        Une détonation secoue le cargo. Olson a crée des étincelle avec sa masse et une vieille lampe qu'il a frappé par folie.
+      </p>
+      <p>
+        Le gaz s’enflamme.
+      </p>
+      <p>
+        Les couloirs deviennent un enfer brûlant.
+      </p>
+
+      <button onclick="go('qte_feu_1')">
+        Courir vers le pont
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_feu_1") {
+    qte("feu_reussi_1", "mort_feu_1", 4000);
+    return;
+  }
+
+  if (state.scene === "mort_feu_1") {
+    die(`
+      Conrad trébuche, Fliss se retourne et décide de l'aider par amour pour lui.
+      Les flammes les engloutissent.
+      Le cargo devient leur tombe.
+    `);
+    return;
+  }
+
+  /* ===== PASSERELLE ===== */
+  if (state.scene === "feu_reussi_1") {
+    show(`
+      <p>
+        Une passerelle métallique s’effondre, Alex tombe de la passerelle avant de les suivre
+        Alex - "Putain mais je vous ai cherché partout ! Il y a des monstres sur ce putain de bateau !"
+        Julia - " Mais non Alex ! Oh et puis merde on t'expliqueras plus tard !"
+      </p>
+      <p>
+        Le bateau de Fliss est visible au loin. 
+        Tout le monde court vers le Sabord pendant qu'Olson se fait dévorer par les flammes qui se dirigent maintenant vers le groupe.
+      </p>
+
+      <button onclick="go('qte_saut')">
+        Sauter
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_saut") {
+    qte("saut_reussi", "mort_chute", 4000);
+    return;
+  }
+
+  if (state.scene === "mort_chute") {
+    die(`
+      Conrad rate son saut.
+      Le vide l’engloutit.
+      Personne ne le reverra.
+    `);
+    return;
+  }
+
+  /* ===== COULOIR FINAL ===== */
+  if (state.scene === "saut_reussi") {
+    show(`
+      <p>
+        Le plafond s’effondre.
+      </p>
+      <p>
+        Une silhouette apparaît.
+        Une hallucination armée.
+      </p>
+
+      <button onclick="go('qte_tir')">
+        Ne pas tirer
+      </button>
+
+      <button onclick="go('tirer_panique')">
+        Tirer
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "tirer_panique") {
+    state.flags.tir_fatal = true;
+    show(`
+      <p>
+        Le coup part.
+      </p>
+      <p>
+        La silhouette disparaît.
+      </p>
+      <p class="small">
+        Danny payera ce choix.
+      </p>
+      <button onclick="go('qte_final_conrad')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_tir") {
+    qte("controle_reussi", "mort_panique", 4000);
+    return;
+  }
+
+  if (state.scene === "mort_panique") {
+    die(`
+      L’hésitation est fatale.
+      Le feu gagne.
+      Conrad s’écroule.
+    `);
+    return;
+  }
+
+  /* ===== DERNIER QTE ===== */
+  if (state.scene === "controle_reussi" || state.scene === "qte_final_conrad") {
+    show(`
+      <p>
+        Le bateau de Fliss est là. Alex, Julia et Fliss y descendent en vie.
+      </p>
+      <p>
+        Le cargo va exploser.
+      </p>
+
+      <button onclick="go('qte_ultime')">
+        Attraper la corde
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_ultime") {
+    qte("conrad_survit", "mort_explosion", 2000);
+    return;
+  }
+
+  if (state.scene === "mort_explosion") {
+    die(`
+      Conrad n'attrape pas la corde.
+      L’explosion illumine la nuit.
+      Conrad disparaît dans les flammes.
+    `);
+    return;
+  }
+
+  if (state.scene === "conrad_survit") {
+    show(`
+      <p>
+        Conrad chute sur le bateau.
+      </p>
+      <p>
+        Derrière lui, le cargo explose. 
+        Julia raconte tout à propos du gaz hallucinogène qui s'appelait "l'or de Manchouries" et qui n'était donc pas de l'or.
+      </p>
+      <p>
+        Tout le monde est sous le choc mais vivant. Seul les pirates y sont restés.
+        Conrad - "On est pas passé loin... je suis sûr que tu ne voudras plus m'avoir comme client à bord de ton bateau de plongée."
+        Fliss - "J'en sais rien... après tout je serai morte sans toi..." Fliss pose une main hésitante et encore tremblante sur celle de Conrad.
+        Victoire !
+
+        Le Conservateur se tient debout, l'air agacé.
+        Le conservateur - "Bon... Contre toute attente vous avez réussi... 
+        Mais ne pensez pas avoir gagné. Nous nous retrouverons, j'en suis sûr. Peut-être à Little Hope. Ou peut-être ailleurs."
+       
+      </p>
       <button onclick="go('menu')">Retour menu</button>
     `);
     return;
