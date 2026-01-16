@@ -2133,6 +2133,90 @@ function playAndrew() {
        Le conservateur - "Le prochain choix décidera si tout le monde vit…
         ou meurt.
       </p>
+      <button onclick="go('decision_finale_andrew')">
+    `);
+    return;
+  }
+  /* ===== LE DERNIER VERDICT ===== */
+  if (state.scene === "decision_finale_andrew") {
+    show(`
+      <p>
+        La petite fille s’avance.
+      </p>
+      <p>
+       Mégane - « Tu dois choisir. »
+      </p>
+      <p>
+       Mégane - « Les aider eux… ou accepter la vérité, m'accepter moi. »
+      </p>
+      <p>
+       Andrew - "Qu'est-ce que tu attends de moi ?!".
+       Les Démons ont encerclé les autres. Chacun tente de faire face à son démon.
+      </p>
+
+      <button onclick="go('choix_condamner')">
+        Aider les autres
+      </button>
+
+      <button onclick="go('choix_verite')">
+        Accepter la vérité
+      </button>
+    `);
+    return;
+  }
+
+  /* ===== TOUT LE MONDE MEURT ===== */
+  if (state.scene === "choix_condamner") {
+    show(`
+      <p>
+        Andrew va vers les autres.
+        Les démons hurlent.
+      </p>
+      <p>
+        Le brouillard engloutit tout. 
+        Daniel est transpercé en plein coeur par l'une des barres de fer du démon empalé.
+        Taylor est étranglée par la longue langue du démon pendu.
+        Angela est brûlée vive par les chaîne du démon enchaîné.
+        John est broyé par les muscles dechirés mais puissants du démon écrasé.
+      </p>
+      <p>
+        Les péchés ne sont jamais pardonnés. Andrew se rappel de tout, que rien n'a jamais éxisté. Il se tirera une balle dans la tête quelques minutes plus tard.
+
+        Le conservateur - "Putain oui ! Vous l'avez bien mauvaise, hein ? Ah ce que je suis fier de moi ! Hum Hum... Je veux dire... Euh...
+        Tout le monde est mort comme dans l'incendit d'il y a quelques années. Je vous conseille d'avoir une autre fin pour mieux comprendre cette histoire.
+        Sinon je vous donne rendez-vous autre part... Comme toujours."
+      </p>
+      <h3>FIN — AUCUN SURVIVANT</h3>
+      <button onclick="go('menu')">Retour menu</button>
+    `);
+    return;
+  }
+
+  /* ===== TOUT LE MONDE SURVIT ===== */
+  if (state.scene === "choix_verite") {
+    show(`
+      <p>
+        Andrew regarde la petite fille.
+      </p>
+      <p>
+       Andrew - « Ce n’était pas réel. »
+      </p>
+      <p>
+        Les démons disparaissent.
+      </p>
+      <p class="small">
+        La culpabilité s’efface.
+        La vérité libère. Tout ceci n'a jamais existé. John, Angela, Daniel et Taylor étaient de sa famille, comme Mégane.
+        Mais tout le monde est mort dans un incendit il y à trente ans et seul Andrew a survécu. 
+        Il accusa sa soeur Mégane d'être responsable de l'incendit comme elle était detéstée par tous. 
+        Le temps passa et Andrew devint chauffeur de bus. Alors lorsqu'il eu l'accident à Little Hope, il s'imagina une rédemption de sa soeur.
+        Celle que vous venez de vivre. Il imagina également que sa famille était professeur et camarades de classes... Mais ils sont morts depuis bien logtemps.
+
+        Le conservateur - "Vous l'avez enfin trouvé... votre chauffeur de bus.
+        Finalement vous avez fait la paix avec votre défunte soeur et vous avez vaincu les démons de votre famille.
+        Je ne vais pas vous féliciter mais vous dires que nous nous retrouverons... En Irak ou peut-être ailleurs."
+      </p>
+      <h3>FIN — TOUS SURVIVENT</h3>
       <button onclick="go('menu')">Retour menu</button>
     `);
     return;
