@@ -1091,6 +1091,153 @@ function playConrad() {
         « Intéressant… Je peux peut-être vous donner un indice : Tout ce qui brille n'est pas or.
         Vous me suivez ? Non ? toujours trop lent. Bonne chance pour l'acte 3.»
       </p>
+   <button onclick="go('infirmerie')">
+    `);
+    return;
+  }
+  /* ===== INFIRMERIE DU CARGO ===== */
+  if (state.scene === "infirmerie") {
+    show(`
+      <p>
+        Des lits rouillés.
+        Des seringues renversées.
+      </p>
+      <p>
+        Conrad sent sa vision vaciller.
+      </p>
+      <p>
+        Des voix murmurent son nom.
+      </p>
+
+      <button onclick="go('examiner_dossiers')">
+        Examiner les dossiers
+      </button>
+
+      <button onclick="go('ignorer_voix')">
+        Ignorer les voix
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "examiner_dossiers") {
+    state.flags.verite_decouverte = true;
+    show(`
+      <p>
+        « Manchurian Gold ».
+      </p>
+      <p>
+        Hallucinogène expérimental.
+        Julia - "Alors on hallucine tous des trucs bizarres ?!"
+      </p>
+      <p>
+        Tous les symptômes correspondent.
+      </p>
+      <p class="small">
+        Rien n’était réel.
+        Mais la mort, elle, l’est toujours. Olson et Junior ne sont pas loin.
+      </p>
+      <button onclick="go('vision_finale')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "ignorer_voix") {
+    state.flags.denial = true;
+    show(`
+      <p>
+        Conrad recule, Fliss et Julia le suivent.
+      </p>
+      <p>
+        Il refuse d’y croire.
+      </p>
+      <button onclick="go('vision_finale')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== DERNIÈRE VISION ===== */
+  if (state.scene === "vision_finale") {
+    show(`
+      <p>
+        Le cargo tremble. Julia et Fliss emprunte un chemin différent de celui de Conrad, le laissant seul.
+      </p>
+      <p>
+        Une dernière apparition surgit tandis que Conrad ramasse le pistolet d'Olson trouvé parterre.
+      </p>
+      <p>
+        Une amalgamation de toutes les peurs de Conrad.
+      </p>
+
+      <button onclick="go('qte_maitrise_peur')">
+        Garder le contrôle
+      </button>
+
+      <button onclick="go('céder_peur')">
+        Céder à la peur
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_maitrise_peur") {
+    qte("calme_reussi", "panique_totale", 4000);
+    return;
+  }
+
+  if (state.scene === "panique_totale") {
+    state.flags.peur_totale = true;
+    show(`
+      <p>
+        Conrad tire.
+      </p>
+      <p>
+        Trop tôt.
+        Trop vite.
+      </p>
+      <p class="small">
+        Les erreurs d’ici mèneront à des morts réelles. 
+        Ce n'était pas un hallucination mais Junior qui n'est maintenant plus vivant.
+      </p>
+      <button onclick="go('avant_final_conrad')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "calme_reussi") {
+    state.flags.maitrise = true;
+    show(`
+      <p>
+        Conrad respire.
+      </p>
+      <p>
+        L’illusion se dissipe. C'était Junior qui levait les mains en l'air en signe de reddition.
+      </p>
+      <p class="small">
+        La lucidité peut sauver des vies... 
+        Mais pas celle de Junior qui se prend un coup de masse sur le crâne, fendu par Olson devenu fou et qui hurle.
+      </p>
+      <button onclick="go('avant_final_conrad')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== AVANT LA GRANDE FIN ===== */
+  if (state.scene === "avant_final_conrad") {
+    show(`
+      <p>
+        Conrad court retrouver les autres.
+      </p>
+      <p>
+        Le cargo est sur le point de sombrer à cause d'Olson qui donne des coups de masse sur tout ce qu'il croit être des monstres.
+      </p>
+      <p class="small">
+        Le Conservateur referme son livre.
+        « La fin approche… »
+      </p>
+      <p class="small">
+        (La prochaine scène est la GRANDE FIN)
+      </p>
       <button onclick="go('menu')">Retour menu</button>
     `);
     return;
@@ -1537,6 +1684,130 @@ function playAndrew() {
       </p>
       <p class="small">
         Little Hope ne pardonne jamais. Nos démon refont toujours surface.
+      </p>
+ 
+      <button onclick="go('rue_principale')">
+    `);
+    return;
+  }
+  /* ===== RUE PRINCIPALE ===== */
+  if (state.scene === "rue_principale") {
+    show(`
+      <p>
+        Une silhouette se tient au milieu de la route.
+      </p>
+      <p>
+        Une petite fille.
+      </p>
+      <p>
+        Elle sourit.
+      </p>
+
+      <button onclick="go('approcher_fille')">
+        Approcher
+      </button>
+
+      <button onclick="go('se_mefier_fille')">
+        Se méfier
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "approcher_fille") {
+    state.flags.confiance_fille = true;
+    show(`
+      <p>
+       Mégan, la petite fille - « Vous êtes perdus… comme eux. »
+      </p>
+      <p>
+        Sa voix est calme.
+        Trop calme.
+      </p>
+      <button onclick="go('revelation_fille')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "se_mefier_fille") {
+    state.flags.mefiance = true;
+    show(`
+      <p>
+        Andrew recule. Le groupe est tériffié sauf Taylor qui est trop concentrée sur son make up.
+      </p>
+      <p>
+        La petite fille sourit davantage.
+      </p>
+      <button onclick="go('revelation_fille')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== RÉVÉLATION ===== */
+  if (state.scene === "revelation_fille") {
+    show(`
+      <p>
+       Mégane, la petite fille - « Ils méritaient tous leur sort. »
+      </p>
+      <p>
+        Les démons apparaissent derrière elle.
+      </p>
+      <p>
+       Mégane - « Et vous aussi. Vous m'avez tué après tout. »
+      </p>
+
+      <button onclick="go('defier_fille')">
+        La défier
+      </button>
+
+      <button onclick="go('ecouter_fille')">
+        L’écouter
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "defier_fille") {
+    state.flags.resistance = true;
+    show(`
+      <p>
+        Andrew refuse de plier. Angela se place à ses côté, prête à en découdre pendant que John recule, terrifié.
+      </p>
+      <p>
+        Les démons hurlent.
+      </p>
+      <button onclick="go('avant_final_andrew')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "ecouter_fille") {
+    state.flags.soumission = true;
+    show(`
+      <p>
+        La petite fille chuchote :
+      </p>
+      <p>
+        « Le passé ne pardonne jamais. »
+      </p>
+      <button onclick="go('avant_final_andrew')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== AVANT FIN ANDREW ===== */
+  if (state.scene === "avant_final_andrew") {
+    show(`
+      <p>
+        Little Hope disparaît dans le brouillard.
+      </p>
+      <p>
+        Le conservateur se tient dans son bureau.
+        "Le verdict approche. L'acte 3 commence là où votre intelligence s'arrête... Bien trop tôt."
+      </p>
+      <p class="small">
+        Les choix décideront de la vérité…
+        ou du mensonge mortel. Chaque instant vous sera peut-être fatal.
       </p>
       <button onclick="go('menu')">Retour menu</button>
     `);
