@@ -615,7 +615,7 @@ function playConrad() {
         Répondre
       </button>
 
-      <button onclick="go('ignorer_voix')">
+      <button onclick="go('retrouver_fliss')">
         Ignorer la voix
       </button>
     `);
@@ -630,7 +630,7 @@ function playConrad() {
         Immobile.
       </p>
       <p>
-        Son sourire est… faux.
+        Son sourire est étrange.
       </p>
       <p>
         Elle ouvre la bouche.
@@ -681,7 +681,7 @@ function playConrad() {
         Fliss surgit de l’ombre.
       </p>
       <p>
-        « Conrad ! Tu vas bien ? »
+        « Conrad ! Tu vas bien ? Oû sont passés les autres ? »
       </p>
 
       <button onclick="go('avouer')">
@@ -702,7 +702,7 @@ function playConrad() {
         Fliss fronce les sourcils.
       </p>
       <p>
-        « Ce bateau nous fait perdre la tête. »
+        « Ce bateau nous fait perdre la tête alors arrête de déconner et aide moi à retrouver Julia et Alex. On doit partir avant que les pirates ne nous retrouves ! »
       </p>
       <p class="small">
         Votre lucidité est remise en question.
@@ -734,6 +734,9 @@ function playConrad() {
       </p>
       <p class="small">
         Le Conservateur note quelque chose dans son livre.
+        "Voilà ! Fin de l'acte 1. Vous pensez pouvoir tenir jusquà l'acte 3 ? Laissez-moi en douter.
+        Que pensez-vous de notre intriguante Fliss ? Est-ce qu'elle vous aime secrètement ou vous déteste ?
+        Sans compter tous nos disparus. Arriverez-vous à les retrouver... vivant ?"
       </p>
       <button onclick="go('menu')">
         Retour menu (chapitre suivant à venir)
@@ -752,7 +755,7 @@ function playAndrew() {
       <h2>Le Conservateur</h2>
       <p>
         « Certains hommes cherchent des réponses.
-        D’autres fuient les questions. »
+        D’autres fuient les questions. Je suis là pour recueillir vos choix... Vos erreurs passées et futur, autant dire un bestseller !»
       </p>
       <p>
         « Andrew…  
@@ -767,13 +770,13 @@ function playAndrew() {
   if (state.scene === "bus_crash") {
     show(`
       <p>
-        Le bus est éventré.
+        Le bus est éventré sur la route, dans les bois.
       </p>
       <p>
         Le brouillard étouffe le son.
       </p>
       <p>
-        Andrew se relève, désorienté.
+        Andrew se relève, désorienté, sans aucun souvenir.
       </p>
 
       <button onclick="go('rejoindre_groupe')">
@@ -795,7 +798,7 @@ function playAndrew() {
         Andrew avance seul.
       </p>
       <p>
-        Une silhouette le suit dans la brume.
+        Une silhouette le suit dans la brume. "Qui est là ?"
       </p>
       <button onclick="go('qte_pas')">Se retourner</button>
     `);
@@ -810,7 +813,7 @@ function playAndrew() {
   if (state.scene === "attaque") {
     die(`
       Andrew se retourne trop tard.
-      Le passé le rattrape.
+      Le passé le rattrape, une petite fille sans oeuil lui arrache le bras.
     `);
     return;
   }
@@ -823,7 +826,7 @@ function playAndrew() {
       </p>
       <p>
         John tente de garder son calme.
-        Angela panique.
+        Angela utilise sa colère sur Taylor pour rien.
         Daniel observe les alentours.
       </p>
 
@@ -846,7 +849,8 @@ function playAndrew() {
         Angela tremble.
       </p>
       <p>
-        « J’ai l’impression qu’on n’est pas seuls… »
+       Angela - « J’ai l’impression qu’on n’est pas seuls… Et oû est ce chauffeur de bus ?
+        On aurait jamais dû faire ce voyage scolair ! Merci monsieur John ! »
       </p>
       <button onclick="go('fin_debut')">Continuer</button>
     `);
@@ -860,7 +864,8 @@ function playAndrew() {
         John veut comprendre.
       </p>
       <p>
-        « Cette ville cache quelque chose. »
+       John - « Le panneau indique "Little Hope". C'est une ville historiquement connu pour ses procès de sorcières comme à Salem...
+       On devrait y aller pour trouver de l'aide, je suis responsable de votre sécurité en temps que professeur. »
       </p>
       <button onclick="go('fin_debut')">Continuer</button>
     `);
@@ -874,7 +879,8 @@ function playAndrew() {
         Le brouillard se referme derrière vous.
       </p>
       <p class="small">
-        Little Hope ne vous laissera pas partir si facilement.
+        Little Hope ne vous laissera pas partir si facilement. Vos démons vous rattrapent... Toujours.
+        Taylor et son égoïsme, Daniel et sa paresse, John et sa soif de savoir, Angela et sa colère... Andrew et son crime.
       </p>
       <button onclick="go('menu')">Retour menu</button>
     `);
@@ -890,7 +896,7 @@ function playRachel() {
       <h2>Le Conservateur</h2>
       <p>
         « La guerre révèle ce que l’homme a de plus sombre…
-        et ce qui rampe sous la terre. »
+        et ce qui rampe sous la terre. Je ne suis pas censé vous aiser mais... Restez concentrer. Le danger peut apparaître à tout moment.»
       </p>
       <button onclick="go('chute')">Continuer</button>
     `);
@@ -903,7 +909,7 @@ function playRachel() {
         Le sol s’effondre.
       </p>
       <p>
-        Rachel tombe dans l’obscurité.
+        Rachel tombe dans l’obscurité avec son pistolet. Son commando envoyé dans les monts Zagros en Irak en 2003 ne doivent pas être loin.
       </p>
       <button onclick="go('qte_atterrissage')">Se protéger</button>
     `);
@@ -917,7 +923,7 @@ function playRachel() {
 
   if (state.scene === "mort") {
     die(`
-      L’impact est fatal.
+      L’impact est fatal. Une créature ailée vous capture pour vous dévorer.
       Même les soldats d’élite tombent.
     `);
     return;
@@ -926,10 +932,10 @@ function playRachel() {
   if (state.scene === "vivante") {
     show(`
       <p>
-        Rachel se relève.
+        Rachel se relève. "Putain mais c'était quoi ce truc ?! Mailman 2-1 Actual, vous me recevez ?!"
       </p>
       <p>
-        Des bruits inhumains résonnent.
+        Aucun signal depuis la radio. Des bruits inhumains résonnent dans le fond de la grotte.
       </p>
       <button onclick="go('menu')">Retour menu</button>
     `);
