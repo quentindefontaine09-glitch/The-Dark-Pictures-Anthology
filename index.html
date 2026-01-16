@@ -2,7 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
-<title>The Dark Pictures</title>
+<title>The Dark Fritures Anthology (inspiré de Supermassive Games)</title>
 
 <style>
 body {
@@ -581,22 +581,168 @@ function playConrad() {
       </p>
       <p>
         Des bruits résonnent…
-        ou peut-être est-ce seulement dans la tête de Conrad ?
+        ou peut-être est-ce seulement dans la tête de Conrad ? Conrad se retrouve seul. Tout le monde a disparu...
       </p>
 
       <button onclick="go('suivre_bruit')">
         Suivre le bruit
       </button>
 
-      <button onclick="go('rejoindre_famille')">
+      <button onclick="go('retrouver_fliss')">
         Rejoindre les autres
       </button>
+          `);
+    return;
+  }
+  /* ===== HALLUCINATIONS ===== */
+  if (state.scene === "suivre_bruit") {
+    show(`
+      <p>
+        Conrad avance seul.
+      </p>
+      <p>
+        Le bruit devient un murmure.
+        Une voix familière.
+      </p>
+      <p>
+        « Conrad… »
+      </p>
+      <p>
+        Julia ?
+      </p>
 
+      <button onclick="go('hallucination_julia')">
+        Répondre
+      </button>
+
+      <button onclick="go('ignorer_voix')">
+        Ignorer la voix
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "hallucination_julia") {
+    state.flags.hallucinations = true;
+    show(`
+      <p>
+        Julia apparaît devant lui.
+        Immobile.
+      </p>
+      <p>
+        Son sourire est… faux.
+      </p>
+      <p>
+        Elle ouvre la bouche.
+      </p>
+      <p>
+        Un cri inhumain en jaillit.
+      </p>
+      <button onclick="go('qte_recul')">Reculer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_recul") {
+    qte("recul_ok", "recul_rate", 4000);
+    return;
+  }
+
+  if (state.scene === "recul_rate") {
+    die(`
+      Conrad reste figé.
+      La créature se jette sur lui.
+      La peur l’emporte sur la raison.
+    `);
+    return;
+  }
+
+  if (state.scene === "recul_ok") {
+    show(`
+      <p>
+        L’apparition se dissout.
+      </p>
+      <p>
+        Conrad halète.
+        Sa tête lui fait mal.
+      </p>
+      <p class="small">
+        Ce qu’il a vu… était-ce réel ?
+      </p>
+      <button onclick="go('retrouver_fliss')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== CONSÉQUENCES ===== */
+  if (state.scene === "retrouver_fliss") {
+    show(`
+      <p>
+        Fliss surgit de l’ombre.
+      </p>
+      <p>
+        « Conrad ! Tu vas bien ? »
+      </p>
+
+      <button onclick="go('avouer')">
+        Lui dire ce que tu as vu
+      </button>
+
+      <button onclick="go('mentir')">
+        Mentir
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "avouer") {
+    state.flags.mental_fragile = true;
+    show(`
+      <p>
+        Fliss fronce les sourcils.
+      </p>
+      <p>
+        « Ce bateau nous fait perdre la tête. »
+      </p>
+      <p class="small">
+        Votre lucidité est remise en question.
+      </p>
+      <button onclick="go('chapitre_suivant')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "mentir") {
+    show(`
+      <p>
+        « Rien. Juste mon imagination. »
+      </p>
+      <p>
+        Fliss hoche la tête… sans te croire.
+      </p>
+      <button onclick="go('chapitre_suivant')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== FIN DE CHAPITRE ===== */
+  if (state.scene === "chapitre_suivant") {
+    show(`
+      <p>
+        Plus loin dans le cargo,
+        quelque chose vous observe.
+      </p>
+      <p class="small">
+        Le Conservateur note quelque chose dans son livre.
+      </p>
+      <button onclick="go('menu')">
+        Retour menu (chapitre suivant à venir)
+      </button>
+      
       <button onclick="go('menu')">Retour menu (temporaire)</button>
     `);
     return;
   }
-}
 
 function playAndrew() {
 
