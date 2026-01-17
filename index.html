@@ -3291,57 +3291,989 @@ if (state.scene === "branche_finale_desespoir") {
 
 
 function playKate() {
+  state.flags = {
+  ...state.flags,
+  kate_prudente: false,
+  kate_bravoure: false,
+  erin_vivante: true,
+  jamie_vivante: true,
+  mark_vivant: true,
+  charlie_vivant: true,
+  hotel_piege_active: false,
+  confiance_hote: false,
+  premiere_victime: null
+};
+if (state.scene === "intro") {
+  show(`
+    <p class="conservateur">
+      « Certains lieux sont construits pour être admirés…
+      d’autres pour observer. »
+    </p>
+    <p class="conservateur">
+      « Entrez donc.
+      L’hôtel est ouvert. »
+    </p>
 
-  if (state.scene === "intro") {
+    <button onclick="go('arrivee_hotel')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "arrivee_hotel") {
+  show(`
+    <p>
+      La façade de l’hôtel se dresse dans le brouillard.
+    </p>
+    <p>
+      Trop parfait.
+      Trop silencieux.
+    </p>
+    <p>
+      Kate Wilder (vous) descend du van, c'est la star de la série documentaire.
+    </p>
+    <p class="small">
+      L’air est lourd.
+      Comme si le bâtiment respirait.
+    </p>
+
+    <button onclick="go('equipe_documentaire_intro')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "equipe_documentaire_intro") {
+  show(`
+    <p>
+      <strong>Mark</strong> règle sa caméra. C'est le caméraman de l'équipe et l'ex de Kate. Ils se sont quittés en mauvais termes.
+    </p>
+    <p>
+      <strong>Jamie</strong> observe les issues. C'est la mécano de l'équipe et elle déteste Kate
+    </p>
+    <p>
+      <strong>Erin</strong> ajuste son micro, nerveuse. Elle et l'assistante de Charlie. Elle s'entend bien avec tout le monde.
+    </p>
+    <p>
+      <strong>Charlie</strong> sourit, mais transpire. C'est le réalisateur de l'équipe. Il n'aime pas Kate.
+    </p>
+
+    <p class="small">
+      Aucun d’eux ne sait encore
+      qu’ils ont été choisis.
+    </p>
+
+    <button onclick="go('premier_choix_kate')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "premier_choix_kate") {
+  show(`
+    <p>
+      Kate sent quelque chose de profondément anormal. 
+      Elle aimerais se dire que c'est simplement Erin qui a pété mais ce n'est pas ça...
+    </p>
+
+    <button onclick="go('kate_inspecte')">
+      Inspecter discrètement l’hôtel
+    </button>
+
+    <button onclick="go('kate_fait_confiance')">
+      Faire confiance à l’hôte
+    </button>
+  `);
+  return;
+}
+if (state.scene === "kate_inspecte") {
+  state.flags.kate_prudente = true;
+  show(`
+    <p>
+      Kate remarque une caméra dissimulée.
+    </p>
+    <p>
+      Une autre derrière un miroir.
+    </p>
+    <p class="small">
+      Quelqu’un observe tout.
+     Kate - "Hé Charlie ! Qu'est-ce que c'est que cet hôtel que tu nous a réservé là ?!"
+     Charlie - "Bof ce doit être le système de surveillance de l'hôtel, rien de grave.
+     Monsieur Du'Met, le gérant, nous offre gratuitement ce séjour car il est fan de notre émission alors ne va pas lui manquer de respect !"
+     Il a à peine le temps de finir sa phrase que...
+    </p>
+
+    <button onclick="go('piege_charlie')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "kate_fait_confiance") {
+  state.flags.confiance_hote = true;
+  show(`
+    <p>
+      Du'Met, le gérant sourit depuis sa salle de surveillance.
+    </p>
+    <p>
+     Ktae se dirige vers Erin mais...
+    </p>
+    <p class="small">
+      La porte se verrouille derrière eux.
+    </p>
+
+    <button onclick="go('piege_charlie')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "piege_charlie") {
+  state.flags.hotel_piege_active = true;
+  show(`
+    <p>
+      Charlie et Erin sont enfermés dans deux pièges de verre différents.
+    </p>
+    <p>
+      La pression monte. Erin et Charlie ne comprennent pas ce qu'il se passe.
+    </p>
+    <p>
+      Les murs de verres vibrent et se rapprochent.
+    </p>
+
+    <button onclick="go('choix_piege_charlie')">
+      Agir
+    </button>
+  `);
+  return;
+}
+if (state.scene === "choix_piege_charlie") {
+  show(`
+    <p>
+      Un seul levier apparait devant Kate avec une inscription : "incline-le vers qui tu veut voir mourir".
+    </p>
+    <p>
+      Deux effets possibles.
+    </p>
+
+    <button onclick="go('sauver_charlie')">
+      Tirer le levier vers Erin
+    </button>
+
+    <button onclick="go('observer_plus')">
+      Tirer le levier vers Charlie
+    </button>
+  `);
+  return;
+}
+if (state.scene === "observer_plus") {
+  state.flags.charlie_vivant = false;
+  state.flags.premiere_victime = "Charlie";
+  show(`
+    <p class="death">
+      Le levier se bloque vers Charlie.
+    </p>
+    <p>
+      La pression devient insupportable.
+    </p>
+    <p>
+      Charlie est écrasé entre les murs du piège. Son crâne explose sous la pression.
+    </p>
+
+    <p class="small">
+      Première victime.
+      Pas la dernière.
+    </p>
+
+    <button onclick="go('traumatisme_equipe')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "sauver_charlie") {
+  show(`
+    <p>
+      La porte s’ouvre.
+    </p>
+    <p>
+      Charlie tombe à genoux mais les murs se rapprochent d'Erin mais...
+      Erin sort de son sac un micro avec embout pointu, qu'elle utilise pour briser l'un des murs.
+      Personne n'est mort et Jamie et Mark sont incapable de bouger, sous le choc.
+      Charlie - "C'est bon je me casse d'ici !" Charlie s'enfuit dans les couloirs de l'hôtel, terrifié.
+    </p>
+    <p class="small">
+      Quelqu’un rit derrière les murs.
+    </p>
+
+    <button onclick="go('traumatisme_equipe')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "traumatisme_equipe") {
+  show(`
+    <p>
+      Erin tremble.
+      Erin - "Mais c'était pas dans le contrat ça !"
+    </p>
+    <p>
+      Jamie serre les dents.
+      Jamie - "Charlie encore une fois tu as accepté l'offre d'un fan qui se trouve être un taré... BRAVO !"
+    </p>
+    <p>
+      Mark ne filme plus.
+      Mark - "Moi je pense que c'est de la faute de Kate parce qu'elle a rompu avec moi
+      Kate - "C'est quoi le rapport ?!"
+    </p>
+
+    <p class="small">
+      L’hôtel teste leurs limites.
+    </p>
+
+    <button onclick="go('embranchement_acte_2')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "embranchement_acte_2") {
+  show(`
+    <p>
+      Plusieurs chemins s’offrent à eux.
+    </p>
+    <p class="small">
+      Chacun mène à un piège différent.
+    </p>
+
+    <button onclick="go('a_suivre')">
+      À suivre…
+    </button>
+  `);
+  return;
+}
+if (state.scene === "a_suivre") {
+  show(`
+    <p>
+      Le groupe arrive à une intersection.
+    </p>
+    <p>
+      Trois couloirs.
+      Trois ambiances.
+      Jamie - "On doit se tirer de là. c'est trop tard pour Charlie."
+    </p>
+
+    <button onclick="go('couloir_silencieux')">
+      Couloir silencieux
+    </button>
+
+    <button onclick="go('couloir_machines')">
+      Couloir mécanique
+    </button>
+
+    <button onclick="go('couloir_miroirs')">
+      Couloir aux miroirs
+    </button>
+  `);
+  return;
+}
+if (state.scene === "couloir_silencieux") {
+  show(`
+    <p>
+      Le son disparaît brutalement.
+    </p>
+    <p>
+      Même leurs pas semblent étouffés.
+    </p>
+    <p>
+      Erin pâlit.
+    </p>
+
+    <p class="small">
+     Erin - « Mon micro capte quelque chose… »
+     Kate - "Commence par arrêter de parler alors ! Putain ce qu'elle peut être teuteu celle-là."
+    </p>
+
+    <button onclick="go('piege_erin_intro')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "piege_erin_intro") {
+  show(`
+    <p>
+     Erin passe devant et entre dans une pièce. La porte se referme derrière Erin.
+    </p>
+    <p>
+      Un sifflement aigu traverse son crâne.
+    </p>
+    <p>
+      Erin tombe à genoux. Erin - "AAAAAAH"
+    </p>
+
+    <button onclick="go('choix_piege_erin')">
+      Réagir
+    </button>
+  `);
+  return;
+}
+if (state.scene === "choix_piege_erin") {
+  show(`
+    <p>
+      Kate comprend :
+    </p>
+    <p>
+      — Ouvrir la porte expose Kate et son brushing.
+    </p>
+    <p>
+      — Fermer condamne Erin.
+      Kate - "Y a pas de bonne solution..."
+    </p>
+
+    <button onclick="go('ouvrir_pour_erin')">
+      Ouvrir la porte
+    </button>
+
+    <button onclick="go('fermer_pour_survivre')">
+      Refermer et reculer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "ouvrir_pour_erin") {
+  qte("erin_sauvee", "erin_morte", 1200);
+  return;
+}
+if (state.scene === "erin_morte") {
+  state.flags.erin_vivante = false;
+  state.flags.premiere_victime = state.flags.premiere_victime || "Erin";
+
+  show(`
+    <p class="death">
+      Erin hurle.
+    </p>
+    <p>
+      Le son devient insupportable.
+    </p>
+    <p>
+      Puis plus rien.
+    </p>
+
+    <p class="small">
+      L’hôtel a encore gagné.
+    </p>
+
+    <button onclick="go('apres_piege_erin')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "erin_sauvee") {
+  show(`
+    <p>
+      La porte cède.
+    </p>
+    <p>
+      Erin s’effondre dans les bras de Jamie.
+    </p>
+    <p class="small">
+      Elle a deux aiguilles plantées dans les oreilles n’entendra plus jamais correctement.
+    </p>
+
+    <button onclick="go('apres_piege_erin')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "fermer_pour_survivre") {
+  state.flags.erin_vivante = false;
+  show(`
+    <p class="death">
+      La porte se referme.
+    </p>
+    <p>
+      Les cris sont étouffés.
+    </p>
+    <p>
+      Puis le silence.
+    </p>
+
+    <p class="small">
+      Kate ne se retournera pas. Le reste du groupe suit sa décision.
+    </p>
+
+    <button onclick="go('apres_piege_erin')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "apres_piege_erin") {
+  show(`
+    <p>
+      Jamie accuse Kate.
+    </p>
+    <p>
+      Mark détourne le regard.
+    </p>
+
+    <p class="small">
+      Chaque décision rend la suivante plus lourde.
+    </p>
+
+    <button onclick="go('transition_acte_3')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "transition_acte_3") {
+  show(`
+    <p>
+      L’hôtel change.
+    </p>
+    <p>
+      Les murs bougent.
+    </p>
+    <p>
+      Le jeu s’accélère.
+    </p>
+
+    <p class="small">
+     Le conservateur - "Prochain acte : la chasse commence. Ce que ça va être éxcitant ! 
+     Merde... J'ai plus de pop corn, va falloir que je passe à Carrefour."
+    </p>
+
+    <button onclick="go('a_suivre_kate_acte_3')">
+      À suivre…
+    </button>
+  `);
+  return;
+}
+if (state.scene === "a_suivre_kate_acte_3") {
+  show(`
+    <p>
+      Une alarme retentit.
+    </p>
+    <p>
+      Les lumières clignotent.
+    </p>
+    <p>
+      Quelque chose bouge derrière eux.
+    </p>
+
+    <p class="small">
+      Cette fois, ce n’est plus un test.
+      C’est une chasse.
+    </p>
+
+    <button onclick="go('debut_chasse')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "debut_chasse") {
+
+  if (!state.flags.erin_vivante) {
     show(`
-      <h2>Le Conservateur</h2>
       <p>
-        « Certains monstres portent un masque…
-        d’autres construisent des hôtels. »
+        Le silence est total.
       </p>
-      <button onclick="go('hotel')">Continuer</button>
+      <p>
+        Plus aucun micro.
+      </p>
+      <p class="small">
+        Ils avancent à l’aveugle.
+      </p>
+
+      <button onclick="go('chasse_sans_erin')">
+        Continuer
+      </button>
     `);
     return;
   }
 
-  if (state.scene === "hotel") {
+  show(`
+    <p>
+      Erin chuchote :
+    </p>
+    <p class="small">
+     Erin - « Il est proche… je l’entends. »
+      Mark - "Désolé... j'ai pas pu me retenir, c'est à cause des flageolets de Charlie"
+    </p>
+
+    <button onclick="go('chasse_avec_erin')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "chasse_avec_erin") {
+  show(`
+    <p>
+      Erin guide le groupe.
+    </p>
+    <p>
+      Les sons révèlent des passages sûrs.
+    </p>
+
+    <button onclick="go('choix_jamie_chasse')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "chasse_sans_erin") {
+  show(`
+    <p>
+      Un piège se déclenche.
+    </p>
+    <p>
+      Jamie est isolée.
+    </p>
+
+    <button onclick="go('choix_jamie_chasse')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "choix_jamie_chasse") {
+  show(`
+    <p>
+      Jamie est piégée dans un long couloir.
+    </p>
+    <p>
+      Des lames apparaissent aux murs et se rapprochent.
+    </p>
+
+    <button onclick="go('aider_jamie')">
+      Aider Jamie
+    </button>
+
+    <button onclick="go('laisser_jamie')">
+      Fuir car le tueur approche
+    </button>
+  `);
+  return;
+}
+if (state.scene === "aider_jamie") {
+  qte("jamie_sauvee", "jamie_morte", 1200);
+  return;
+}
+if (state.scene === "jamie_morte") {
+  state.flags.jamie_vivante = false;
+
+  show(`
+    <p class="death">
+    Kate force la porte... trop tard. Les lames se referment.
+    </p>
+    <p>
+      Kate détourne le regard.
+    </p>
+
+    <p class="small">
+      L’hôtel ne pardonne pas l’hésitation.
+    </p>
+
+    <button onclick="go('apres_jamie')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "jamie_sauvee") {
+  show(`
+    <p>
+      Jamie force la porte et rejoint les autres.
+    </p>
+    <p>
+      Vivante.
+    </p>
+
+    <p class="small">
+      Mais plus personne ne veux passer devant. 
+      Jamie va chercher les disparus du groupe par désespoir pendant que Kate et Mark vont chercher la sortie.
+    </p>
+
+    <button onclick="go('apres_jamie')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "laisser_jamie") {
+  state.flags.jamie_vivante = false;
+
+  show(`
+    <p class="death">
+      Jamie comprend.
+    </p>
+    <p>
+      Elle ne crie pas.
+      Jamie - "Kate... T'es qu'une connasse...
+      mais je t'aurais abandonné aussi si c'était l'inverse alors je respecte ton choix."
+    </p>
+
+    <p class="small">
+      Le choix hantera Kate pendant que Jamie se fait couper en morceaux.
+    </p>
+
+    <button onclick="go('apres_jamie')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "apres_jamie") {
+  show(`
+    <p>
+      Il ne reste plus que Kate et Mark.
+    </p>
+
+    <p class="small">
+      Du'Met a presque fini de jouer.
+    </p>
+
+    <button onclick="go('confrontation_mark')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "confrontation_mark") {
+  show(`
+    <p>
+      Mark remarque une caméra mobile.
+    </p>
+    <p>
+      Elle les suit.
+    </p>
+
+    <button onclick="go('choix_mark')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "choix_mark") {
+  show(`
+    <p>
+     Mark - "Le tueur est proche."
+    </p>
+
+    <button onclick="go('affronter_tueur')">
+      L’affronter
+    </button>
+
+    <button onclick="go('se_cacher')">
+      Se cacher
+    </button>
+  `);
+  return;
+}
+if (state.scene === "affronter_tueur") {
+  state.flags.kate_bravoure = true;
+  show(`
+    <p>
+      Kate serre les poings.
+    </p>
+
+    <p class="small">
+      Ce choix changera la fin.
+    </p>
+
+    <button onclick="go('transition_acte_4')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+
+if (state.scene === "se_cacher") {
+  show(`
+    <p>
+      Ils retiennent leur souffle.
+    </p>
+
+    <p class="small">
+      La peur décidera plus tard.
+    </p>
+
+    <button onclick="go('transition_acte_4')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "transition_acte_4") {
+  show(`
+    <p>
+      Les pièges cessent.
+    </p>
+    <p>
+      Une dernière porte s'ouvre.
+    </p>
+
+    <p class="small">
+    Le conservateur - "La fin dépendra de tous les choix précédents.
+    Autant abandonner tout de suite.
+    </p>
+
+    <button onclick="go('a_suivre_kate_final')">
+      À suivre…
+    </button>
+  `);
+  return;
+}
+if (state.scene === "a_suivre_kate_final") {
+  show(`
+    <p>
+      La dernière porte s’ouvre.
+    </p>
+    <p>
+      Une salle immense.
+    </p>
+    <p>
+      Des écrans partout.
+    </p>
+    <p class="small">
+      Ils ont toujours été observés.
+    </p>
+
+    <button onclick="go('revelation_tueur')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "a_suivre_kate_final") {
+  show(`
+    <p>
+      La dernière porte s’ouvre.
+    </p>
+    <p>
+      Une salle immense.
+    </p>
+    <p>
+      Des écrans partout.
+    </p>
+    <p class="small">
+      Ils ont toujours été observés.
+    </p>
+
+    <button onclick="go('revelation_tueur')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "revelation_tueur") {
+  show(`
+    <p>
+      La voix résonne :
+    </p>
+    <p class="small">
+     Du'Met - « "Chaque choix était enregistré, chaque peur analysée." 
+     C'est ce que me repète un de mes vieux amis à chaque fois que je tue quelqu'un.
+     Mais il me semble que vous le connaissait bien. Il est comme notre narrateur à tous.»
+    </p>
+    <p>
+      Mark serre la caméra.
+      Mark - "Vous êtes dingues !"
+    </p>
+
+    <button onclick="go('choix_final_kate')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "choix_final_kate") {
+  show(`
+    <p>
+      Le tueur apparaît.
+    </p>
+    <p>
+      Un mécanisme s’active.
+    </p>
+
+    <button onclick="go('kate_affronte')">
+      Affronter le tueur
+    </button>
+
+    <button onclick="go('kate_fuit')">
+      Fuir avec Mark
+    </button>
+  `);
+  return;
+}
+if (state.scene === "kate_affronte") {
+
+  if (!state.flags.kate_bravoure) {
+    go("kate_affronte_echec");
+    return;
+  }
+
+  show(`
+    <p>
+      Kate avance.
+    </p>
+    <p>
+      Elle ne détourne pas le regard.
+    </p>
+
+    <button onclick="go('qte_final_mark')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "kate_affronte_echec") {
+  state.flags.mark_vivant = false;
+
+  show(`
+    <h2>FIN — Le mauvais courage</h2>
+
+    <p class="death">
+      Kate hésite.
+    </p>
+    <p>
+      Le piège se déclenche.
+    </p>
+    <p>
+      Mark est empalé par une structure métallique.
+    </p>
+
+    <p class="small">
+      Le courage tardif tue.
+    </p>
+
+    <button onclick="go('menu')">
+      Retour au menu
+    </button>
+  `);
+  return;
+}
+if (state.scene === "qte_final_mark") {
+  qte("mark_survit", "mark_meurt", 1200);
+  return;
+}
+if (state.scene === "mark_meurt") {
+  state.flags.mark_vivant = false;
+
+  show(`
+    <h2>FIN — Témoins silencieux</h2>
+
+    <p class="death">
+      Mark est happé par la machine. Kate est attrapée par le tueur et mourra égorgée.
+    </p>
+    <p>
+      Les écrans s’éteignent un à un.
+    </p>
+
+    <p class="small">
+      Personne ne racontera leur histoire.
+    </p>
+
+    <button onclick="go('menu')">
+      Retour au menu
+    </button>
+  `);
+  return;
+}
+if (state.scene === "mark_survit") {
+
+  /* 🌞 FIN PARFAITE */
+  if (
+    state.flags.charlie_vivant &&
+    state.flags.erin_vivante &&
+    state.flags.jamie_vivante
+  ) {
     show(`
+      <h2>FIN — Ils sont sortis</h2>
+
       <p>
-        Le hall est silencieux.
+        L’hôtel brûle derrière eux. Charlie, Erin et Jamie y on allumé le feu.
       </p>
       <p>
-        Kate sent qu’elle est observée.
+        L’aube se lève. Un papier s'envole en direction des survivant. Kate ramasse le papier.
+        Kate - "Les gars ! C'est un article du journal local ! Apparemment Du'Met serait... 
+        Mickey Mouse !!!"
+        Charlie - "Putain mais oui ça explique tout !
+        Jamie - "Tu rigoles ?! J'en étais sûr que cette souris de dessin animé cachait un côté sombre !"
       </p>
-      <button onclick="go('qte_cachette')">Se cacher</button>
+
+      <p class="small">
+        Le conservateur - "Tous ont survécu. Pour une quatrième et dernière fois.
+        Nous nous retrouverons très bientôt... Dans l'espace ou peut-être ailleurs."
+      </p>
+
+      <button onclick="go('menu')">
+        Retour au menu
+      </button>
     `);
     return;
   }
 
-  if (state.scene === "qte_cachette") {
-    qte("cachee", "attrapee", 4000);
-    return;
-  }
-
-  if (state.scene === "attrapee") {
-    die(`
-      Le piège se referme.
-      Le tueur ne rate jamais sa proie.
-    `);
-    return;
-  }
-
-  if (state.scene === "cachee") {
+  /* 🟡 FIN AMÈRE */
+  if (
+    state.flags.charlie_vivant ||
+    state.flags.erin_vivante ||
+    state.flags.jamie_vivante
+  ) {
     show(`
+      <h2>FIN — Survivre n’efface rien</h2>
+
       <p>
-        Le danger passe.
+        L’hôtel est détruit. Pendant que Kate et Mark fuyaient l'hôtel, le reste du groupe encore en vie faisait brûler ce dernier.
       </p>
       <p>
-        Pour l’instant.
+       Mais les absents hantent le silence.
       </p>
-      <button onclick="go('menu')">Retour menu</button>
+
+      <p class="small">
+       Le conservateur - "Ils ont survécu. Mais à quel prix.
+       Vous pouvez toujours tenter de faire mieux... Mais vous n'y arriverez pas."
+      </p>
+
+      <button onclick="go('menu')">
+        Retour au menu
+      </button>
     `);
     return;
   }
+
+  /* 🔴 FIN SOLITAIRE */
+  show(`
+    <h2>FIN — Derniers témoins</h2>
+
+    <p>
+      Kate et Mark seuls.
+      Kate - "Je suis désolée Mark... ond evrait se remettre ensemble pour affronter cet horrible évènement."
+      Mark - "N'y compte même pas."
+    </p>
+    <p>
+      L’hôtel est enfin derrière eux.
+    </p>
+
+    <p class="small">
+     Le conservateur - "Les survivants sont parfois les plus brisés. 
+     Mais bon on va pas les plaindres. Bon débarras ! Et vous avez perdu nananère !"
+    </p>
+
+    <button onclick="go('menu')">
+      Retour au menu
+    </button>
+  `);
+  return;
+}
+
 }
 
 
