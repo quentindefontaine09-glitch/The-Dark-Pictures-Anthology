@@ -3122,7 +3122,7 @@ if (state.scene === "desespoir_apres") {
 }
 if (state.scene === "branche_finale_unite") {
 
-  if (state.flags.eric_vivant && state.flags.salim_vivant) {
+  if (state.flags.eric_vivant || state.flags.salim_vivant) {
     show(`
       <h2>FIN — Aube sur le désert</h2>
 
