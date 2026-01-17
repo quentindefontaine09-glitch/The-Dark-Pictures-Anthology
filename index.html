@@ -278,7 +278,7 @@ function playConrad() {
 
   /* ===== QTE ===== */
   if (state.scene === "qte_equilibre") {
-    qte("reussi_equilibre", "rate_equilibre", 4000);
+    qte("reussi_equilibre", "rate_equilibre", 1500);
     state.scene = "attente_qte";
     return;
   }
@@ -406,7 +406,7 @@ function playConrad() {
 
   /* ================= QTE ================= */
   if (state.scene === "qte_fuite") {
-    qte("fuite_reussie", "fuite_ratee", 4000);
+    qte("fuite_reussie", "fuite_ratee", 1500);
     return;
   }
 
@@ -541,7 +541,7 @@ function playConrad() {
   }
 
   if (state.scene === "qte_intervention") {
-    qte("intervention_reussie", "intervention_ratee", 4000);
+    qte("intervention_reussie", "intervention_ratee", 1500);
     return;
   }
 
@@ -645,7 +645,7 @@ function playConrad() {
   }
 
   if (state.scene === "qte_recul") {
-    qte("recul_ok", "recul_rate", 4000);
+    qte("recul_ok", "recul_rate", 1500);
     return;
   }
 
@@ -823,7 +823,7 @@ function playConrad() {
   }
 
   if (state.scene === "qte_poursuite") {
-    qte("poursuite_ok", "poursuite_rate", 4000);
+    qte("poursuite_ok", "poursuite_rate", 1500);
     return;
   }
 
@@ -1015,7 +1015,7 @@ function playConrad() {
   }
 
   if (state.scene === "qte_danny") {
-    qte("danny_sauve", "danny_meurt", 800);
+    qte("danny_sauve", "danny_meurt", 1500);
     return;
   }
 
@@ -1181,7 +1181,7 @@ function playConrad() {
   }
 
   if (state.scene === "qte_maitrise_peur") {
-    qte("calme_reussi", "panique_totale", 4000);
+    qte("calme_reussi", "panique_totale", 1500);
     return;
   }
 
@@ -1263,7 +1263,7 @@ function playConrad() {
   }
 
   if (state.scene === "qte_feu_1") {
-    qte("feu_reussi_1", "mort_feu_1", 4000);
+    qte("feu_reussi_1", "mort_feu_1", 1500);
     return;
   }
 
@@ -1297,7 +1297,7 @@ function playConrad() {
   }
 
   if (state.scene === "qte_saut") {
-    qte("saut_reussi", "mort_chute", 4000);
+    qte("saut_reussi", "mort_chute", 1500);
     return;
   }
 
@@ -1350,7 +1350,7 @@ function playConrad() {
   }
 
   if (state.scene === "qte_tir") {
-    qte("controle_reussi", "mort_panique", 4000);
+    qte("controle_reussi", "mort_panique", 1500);
     return;
   }
 
@@ -1381,7 +1381,7 @@ function playConrad() {
   }
 
   if (state.scene === "qte_ultime") {
-    qte("conrad_survit", "mort_explosion", 2000);
+    qte("conrad_survit", "mort_explosion", 1500);
     return;
   }
 
@@ -1479,7 +1479,7 @@ function playAndrew() {
   }
 
   if (state.scene === "qte_pas") {
-    qte("groupe_rejoint", "attaque", 3000);
+    qte("groupe_rejoint", "attaque", 1400);
     return;
   }
 
@@ -1607,7 +1607,7 @@ function playAndrew() {
   }
 
   if (state.scene === "qte_choc") {
-    qte("choc_ok", "choc_rate", 3000);
+    qte("choc_ok", "choc_rate", 1400);
     return;
   }
 
@@ -1756,7 +1756,7 @@ function playAndrew() {
   }
 
   if (state.scene === "qte_fuite_pendu") {
-    qte("echappe_pendu", "mort_pendu", 3000);
+    qte("echappe_pendu", "mort_pendu", 1400);
     return;
   }
 
@@ -1805,7 +1805,7 @@ function playAndrew() {
   }
 
   if (state.scene === "qte_chaine") {
-    qte("libere", "mort_enchaine", 3000);
+    qte("libere", "mort_enchaine", 1400);
     return;
   }
 
@@ -1836,7 +1836,7 @@ function playAndrew() {
   }
 
   if (state.scene === "qte_empale") {
-    qte("survie_empale", "mort_empale", 3000);
+    qte("survie_empale", "mort_empale", 1400);
     return;
   }
 
@@ -2021,7 +2021,7 @@ function playAndrew() {
   }
 
   if (state.scene === "qte_pendu_final") {
-    qte("survie_pendu", "mort_pendu_final", 3000);
+    qte("survie_pendu", "mort_pendu_final", 1400);
     return;
   }
 
@@ -2047,7 +2047,7 @@ function playAndrew() {
   }
 
   if (state.scene === "qte_enchaine_final") {
-    qte("survie_enchaine", "mort_enchaine_final", 3000);
+    qte("survie_enchaine", "mort_enchaine_final", 1400);
     return;
   }
 
@@ -2074,7 +2074,7 @@ function playAndrew() {
   }
 
   if (state.scene === "qte_empale_final") {
-    qte("survie_empale_final", "mort_empale_final", 650);
+    qte("survie_empale_final", "mort_empale_final", 1400);
     return;
   }
 
@@ -2106,7 +2106,7 @@ function playAndrew() {
   }
 
   if (state.scene === "qte_ecrase") {
-    qte("avant_decision_finale", "mort_ecrase", 2000);
+    qte("avant_decision_finale", "mort_ecrase", 1400);
     return;
   }
 
@@ -2326,7 +2326,7 @@ function playRachel() {
   }
 
   if (state.scene === "qte_chute_rachel") {
-    qte("survie_chute", "mort_chute_rachel", 750);
+    qte("survie_chute", "mort_chute_rachel", 1300);
     return;
   }
 
@@ -2351,10 +2351,506 @@ function playRachel() {
       <p class="small">
         L’ennemi n’est pas humain.
       </p>
+        <button onclick="go('tunnels_sumeriens')">
+          Continuer
+      </button>
+    `);
+    return;
+  }
+    /* ===== TUNNELS SUMÉRIENS ===== */
+  if (state.scene === "tunnels_sumeriens") {
+    show(`
+      <p>
+        Les murs sont couverts de symboles anciens.
+      </p>
+      <p>
+        L’air est lourd.
+        Trop silencieux.
+      </p>
+      <p>
+        Plus loin, Nick pointe son arme.
+        Jason serre les dents.
+      </p>
+
+      <button onclick="go('explorer_symbols')">
+        Examiner les symboles
+      </button>
+
+      <button onclick="go('avancer_prudemment')">
+        Avancer prudemment
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "explorer_symbols") {
+    state.flags.connaissance = true;
+    show(`
+      <p>
+        Rachel reconnaît un avertissement.
+      </p>
+      <p>
+       Rachel - « Ceux qui dorment ne doivent jamais être réveillés. »
+       Jason et Nick entendent Rachel et la rejoignent.
+      </p>
+      <button onclick="go('bruit_tunnel')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "avancer_prudemment") {
+    show(`
+      <p>
+        Le groupe progresse lentement.
+        Jason - "On fait quoi ? Le prisonnier s'est échappé et on a pas l'air d'être seul ici. Putain d'Irakiens."
+      </p>
+      <p>
+        Une pierre roule derrière eux.
+      </p>
+      <button onclick="go('bruit_tunnel')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== PREMIER CONTACT ===== */
+  if (state.scene === "bruit_tunnel") {
+    show(`
+      <p>
+        Un cri inhumain résonne.
+      </p>
+      <p>
+        Quelque chose bouge dans l’ombre.
+      </p>
+
+      <button onclick="go('qte_cachette')">
+        Se cacher
+      </button>
+
+      <button onclick="go('qte_fuir_rachel')">
+        Fuir
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_cachette") {
+    qte("cachette_reussie", "mort_cachette", 1300);
+    return;
+  }
+
+  if (state.scene === "mort_cachette") {
+    die(`
+      Rachel retient son souffle.
+      Pas assez.
+      La créature la trouve et la dévore devant Nick et Jason, impuissants.
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_fuir_rachel") {
+    qte("fuite_reussie", "mort_fuite", 1300);
+    return;
+  }
+
+  if (state.scene === "mort_fuite") {
+    die(`
+      Rachel glisse.
+      Les griffes la rattrapent.
+    `);
+    return;
+  }
+
+  /* ===== APRÈS L’ATTAQUE ===== */
+  if (state.scene === "cachette_reussie" || state.scene === "fuite_reussie") {
+    show(`
+      <p>
+        La créature disparaît.
+      </p>
+      <p>
+        Salim qui s'était caché, attrape l'arme de Jason avant qu'il n'ait le temps de réagir et murmure  au groupe:
+        « Ce sont des démons… »
+      </p>
+      <p>
+        « Ce sont des monstres antiques. Laissez-moi me battre à vos côtés. »
+      </p>
+
+      <button onclick="go('decision_alliance')">
+        Continuer
+      </button>
+    `);
+    return;
+  }
+
+  /* ===== ALLIANCE ===== */
+  if (state.scene === "decision_alliance") {
+    show(`
+      <p>
+        Jason hésite. 
+        Jason - "Pourquoi on devrait fair confiance à quelqu'un qui fait parti du peuple qui a fait un attentat à New York et au pentagone ?"
+      </p>
+      <p>
+        Nick regarde Rachel. 
+        Nick - "Rachel, c'est toi la plus haut gradée si Eric n'est pas là, c'est toi qui décide. 
+        Comme dirait Céline Dion, j'irai où tu iras."
+      </p>
+      <p>
+        Salim attend sa décision.
+        Salim - "On a pas toute la journée !"
+      </p>
+
+      <button onclick="go('alliance_salim')">
+        Faire confiance à Salim
+      </button>
+
+      <button onclick="go('refuser_alliance')">
+        Refuser
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "alliance_salim") {
+    state.flags.alliance = true;
+    show(`
+      <p>
+        Rachel hoche la tête.
+      </p>
+      <p>
+        Une alliance improbable se forme malgré la rétiscence de Jason.
+      </p>
+      <button onclick="go('avant_final_rachel')">Continuer</button>
+    `);
+    return;
+  }
+
+  if (state.scene === "refuser_alliance") {
+    state.flags.conflit = true;
+    show(`
+      <p>
+        Jason récupère son arme et force Salim à passer devant.
+      </p>
+      <p>
+        La tension monte.
+      </p>
+      <button onclick="go('avant_final_rachel')">Continuer</button>
+    `);
+    return;
+  }
+
+  /* ===== AVANT LA FIN (PLUS TARD) ===== */
+  if (state.scene === "avant_final_rachel") {
+    show(`
+      <p>
+        Des cris résonnent dans les profondeurs.
+      </p>
+      <p>
+        Le pire reste à venir.
+      </p>
+      <p class="small">
+      Le conservateur - "La survie dépendra des choix faits ici. Vous avez survécu à l'acte 1 mais attendons de voir la suite."
+      </p>
+   <button onclick="go('salle_reliques')">Continuer</button>
+    `);
+    return;
+  }
+  /* ===== SALLE DES RELIQUES ===== */
+  if (state.scene === "salle_reliques") {
+    show(`
+      <p>
+       Ils entrent dans une sorte de salle sacrificielle de l'époque des Sumériens. La salle est immense.
+      </p>
+      <p>
+        Des cocons pendent au plafond et aux murs.
+      </p>
+      <p>
+        Eric est là, le visage en sang. Il active sa lampe UV qui sert à détecter les éxplosifs.
+      </p>
+      <p>
+       Eric - « Ça les repousse… mais pas longtemps. Aidez-moi, ils vont revenir !»
+      </p>
+
+      <button onclick="go('attaque_creatures')">
+        Continuer
+      </button>
+    `);
+    return;
+  }
+  /* ===== ATTAQUE ===== */
+  if (state.scene === "attaque_creatures") {
+    show(`
+      <p>
+        Des cris surgissent de toutes parts.
+      </p>
+      <p>
+        Les créatures encerclent le groupe.
+      </p>
+      <p>
+        Eric trébuche près d’un cocon.
+      </p>
+
+      <button onclick="go('sauver_eric')">
+        Aider Eric
+      </button>
+
+      <button onclick="go('ordre_retraite')">
+        Ordonner la retraite
+      </button>
+    `);
+    return;
+  }
+  /* ===== SAUVER ERIC ===== */
+  if (state.scene === "sauver_eric") {
+    show(`
+      <p>
+        Rachel se précipite vers Eric.
+      </p>
+      <p>
+        Les créatures approchent.
+      </p>
+
+      <button onclick="go('qte_sauvetage_eric')">
+        Tirer avec précision
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_sauvetage_eric") {
+    qte("eric_sauve", "eric_meurt", 1300);
+    return;
+  }
+
+  if (state.scene === "eric_meurt") {
+    die(`
+      Rachel hésite une fraction de seconde.
+      Une créature attrape Eric.
+      Son cri résonne…
+      puis le silence.
+      
+      Eric est mort. Rachel se fait dévorer avec lui.
+    `);
+    return;
+  }
+
+  if (state.scene === "eric_sauve") {
+    state.flags.eric_vivant = true;
+    show(`
+      <p>
+        La créature s’effondre.
+      </p>
+      <p>
+        Eric est sauvé.
+      </p>
+      <p class="small">
+        Mais quelque chose ne va pas…
+      </p>
+      <button onclick="go('defaite_imminente')">Continuer</button>
+    `);
+    return;
+  }
+  /* ===== ORDRE DE RETRAITE ===== */
+  if (state.scene === "ordre_retraite") {
+    state.flags.defaite = true;
+    show(`
+      <p>
+        Rachel ordonne le repli pendant qu'Eric est dévoré par un monstre à l'allure de chauve-souris géante.
+      </p>
+      <p>
+        Le groupe fuit dans le chaos.
+      </p>
+      <p>
+        Les créatures hurlent derrière eux.
+      </p>
+      <p class="small">
+        Ils ont survécu…
+        mais ont perdu le contrôle de la situation.
+      </p>
+      <button onclick="go('defaite_imminente')">Continuer</button>
+    `);
+    return;
+  }
+  /* ===== DÉFAITE ===== */
+  if (state.scene === "defaite_imminente") {
+    show(`
+      <p>
+        Le groupe se retrouve isolé.
+      </p>
+      <p>
+        Les communications sont coupées.
+      </p>
+      <p>
+        Salim murmure :
+        « Maintenant… nous sommes chassés. »
+      </p>
+      <p class="small">
+        Qu’Eric soit mort ou vivant,
+        la mission est compromise.
+      </p>
+      <button onclick="go('branche_rachel')">Continuer</button>
+    `);
+    return;
+  }
+  /* ===== POINT DE RUPTURE ===== */
+  if (state.scene === "branche_rachel") {
+
+    if (state.flags.alliance && state.flags.eric_vivant && !state.flags.defaite) {
+      go("scenario_unite");
+      return;
+    }
+
+    if (!state.flags.alliance && state.flags.eric_vivant) {
+      go("scenario_conflit");
+      return;
+    }
+
+    if (state.flags.defaite) {
+      go("scenario_desespoir");
+      return;
+    }
+  }
+  if (state.scene === "scenario_unite") {
+    show(`
+      <p>
+        Le groupe avance ensemble.
+      </p>
+      <p>
+        Salim montre un passage sûr.
+      </p>
+      <p>
+        Eric stabilise les lampes UV.
+      </p>
+      <p class="small">
+        La coopération est leur seule chance.
+      </p>
+
+      <button onclick="go('scenario_unite_qte')">
+        Continuer
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "scenario_unite_qte") {
+    qte("unite_reussie", "unite_echec", 1300);
+    return;
+  }
+
+  if (state.scene === "unite_echec") {
+    die(`
+      Une erreur brise l’équilibre.
+      La créature frappe.
+      L’unité s’effondre.
+    `);
+    return;
+  }
+
+  if (state.scene === "unite_reussie") {
+    state.flags.scenario_unite = true;
+    show(`
+      <p>
+        Le groupe atteint une ancienne cité.
+      </p>
+      <p class="small">
+       Le conservateur - "Une fin lumineuse est possible… J'espère que vous échouerez."
+      </p>
       <button onclick="go('menu')">Retour menu</button>
     `);
     return;
   }
+  if (state.scene === "scenario_conflit") {
+    show(`
+      <p>
+        Jason refuse d’écouter Salim. 
+        Jason - "Je ne vais pas laisser cet enfoiré d'arabe vivre !"
+      </p>
+      <p>
+        Les tensions explosent.
+      </p>
+      <p>
+        Nick pointe son arme.
+      </p>
+
+      <button onclick="go('qte_conflit')">
+        Intervenir
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_conflit") {
+    qte("conflit_calme", "conflit_mort", 1300);
+    return;
+  }
+
+  if (state.scene === "conflit_mort") {
+    die(`
+      Le coup part.
+      Une erreur humaine.
+      La mission est condamnée.
+    `);
+    return;
+  }
+
+  if (state.scene === "conflit_calme") {
+    state.flags.scenario_conflit = true;
+    show(`
+      <p>
+        Le groupe survit…
+        mais fracturé.
+      </p>
+      <p class="small">
+      Le conservateu - "Une fin amère se profile pour le dernier acte".
+      </p>
+      <button onclick="go('menu')">Retour menu</button>
+    `);
+    return;
+  }
+  if (state.scene === "scenario_desespoir") {
+    show(`
+      <p>
+        Ils sont traqués. Eric est mort.
+      </p>
+      <p>
+        Les munitions manquent.
+      </p>
+      <p>
+        Les cris se rapprochent.
+      </p>
+
+      <button onclick="go('qte_desespoir')">
+        Courir
+      </button>
+    `);
+    return;
+  }
+
+  if (state.scene === "qte_desespoir") {
+    qte("survie_temporaire", "mort_desespoir", 1300);
+    return;
+  }
+
+  if (state.scene === "mort_desespoir") {
+    die(`
+      Il n’y a plus d’issue.
+      L’obscurité gagne. Le monstre vampire emporte Rachel.
+    `);
+    return;
+  }
+
+  if (state.scene === "survie_temporaire") {
+    state.flags.scenario_desespoir = true;
+    show(`
+      <p>
+        Ils se cachent.
+      </p>
+      <p class="small">
+       Le conservateur - "La fin sera brutale…"
+      </p>
+      <button onclick="go('menu')">Retour menu</button>
+    `);
+    return;
+  }
+
 }
 
 
