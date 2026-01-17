@@ -110,13 +110,13 @@ function startCharacter(char) {
 // =====================
 // QTE SOURIS
 // =====================
-function qte(success, fail, time = 1500) {
+function qte(success, fail, time = 1200) {
   qteSound.currentTime = 0;
   qteSound.play();
 
-  const size = 80;
-  const x = (window.innerWidth * 0.75) + Math.random() * (window.innerWidth * 0,75 - size);
-  const y = (window.innerWidth * 0.75) + Math.random() * (window.innerHeight * 0,75 - size);
+  const size = 40;
+  const x = Math.random() * (window.innerWidth - size);
+  const y = Math.random() * (window.innerHeight - size);
 
   show(`
     <p>AGIS VITE</p>
@@ -127,7 +127,7 @@ function qte(success, fail, time = 1500) {
   `);
 
   setTimeout(() => {
-    if (state.scene === "attente_qte") {
+    if (state.scene !== success) {
       go(fail);
     }
   }, time);
