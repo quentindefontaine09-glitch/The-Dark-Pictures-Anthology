@@ -2616,7 +2616,7 @@ function playRachel() {
   }
 
   if (state.scene === "qte_sauvetage_eric") {
-    qte("eric_sauve", "eric_meurt", 1300);
+    qte("eric_sauver", "eric_meurt", 1300);
     return;
   }
 
@@ -2632,7 +2632,7 @@ function playRachel() {
     return;
   }
 
-  if (state.scene === "eric_sauve") {
+  if (state.scene === "eric_sauver") {
     state.flags.eric_vivant = true;
     show(`
       <p>
