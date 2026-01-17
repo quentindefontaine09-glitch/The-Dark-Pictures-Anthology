@@ -2753,7 +2753,10 @@ function playRachel() {
       <p class="small">
        Le conservateur - "Une fin lumineuse est possible… J'espère que vous échouerez."
       </p>
-      <button onclick="go('menu')">Retour menu</button>
+     
+    <button onclick="go('unite_suite')">
+     Continuer
+    </button>
     `);
     return;
   }
@@ -2801,7 +2804,9 @@ function playRachel() {
       <p class="small">
       Le conservateu - "Une fin amère se profile pour le dernier acte".
       </p>
-      <button onclick="go('menu')">Retour menu</button>
+ <button onclick="go('conflit_suite')">
+      Continuer
+    </button>
     `);
     return;
   }
@@ -2846,10 +2851,438 @@ function playRachel() {
       <p class="small">
        Le conservateur - "La fin sera brutale…"
       </p>
-      <button onclick="go('menu')">Retour menu</button>
+       <button onclick="go('desespoir_suite')">
+      Continuer
+    </button>
     `);
     return;
   }
+/* ===== UNITÉ : ATTAQUE DANS LES RUINES ===== */
+if (state.scene === "unite_suite") {
+  show(`
+    <p>
+      Une créature surgit des hauteurs.
+    </p>
+    <p>
+      Eric trébuche.
+      Salim est encerclé.
+    </p>
+    <p>
+      Rachel doit choisir.
+    </p>
+
+    <button onclick="go('sauver_eric')">
+      Sauver Eric
+    </button>
+
+    <button onclick="go('sauver_salim')">
+      Sauver Salim
+    </button>
+  `);
+  return;
+}
+
+if (state.scene === "sauver_eric") {
+  qte("eric_vivant_suite", "mort_salim", 1300);
+  return;
+}
+
+if (state.scene === "sauver_salim") {
+  qte("salim_vivant_suite", "mort_eric", 1300);
+  return;
+}
+
+if (state.scene === "mort_salim") {
+  state.flags.salim_vivant = false;
+  show(`
+    <p>
+      Salim est submergé.
+    </p>
+    <p class="death">
+      Son cri résonne dans les ruines tandis qu'une créature l'éventre.
+    </p>
+    <button onclick="go('unite_apres_mort')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+
+if (state.scene === "mort_eric") {
+  state.flags.eric_vivant = false;
+  show(`
+    <p>
+      Eric est traîné dans l’ombre. Son corps servira de nourriture.
+    </p>
+    <p class="death">
+      Rachel reste figée.
+    </p>
+    <button onclick="go('unite_apres_mort')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+
+if (state.scene === "eric_vivant_suite" || state.scene === "salim_vivant_suite") {
+  show(`
+    <p>
+      Le groupe survit…
+      mais le prix est lourd.
+    </p>
+    <button onclick="go('unite_apres_mort')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+
+if (state.scene === "unite_apres_mort") {
+  show(`
+    <p>
+      La cohésion vacille.
+    </p>
+    <p class="small">
+      D’autres décisions seront irréversibles.
+    </p>
+    <button onclick="go('branche_finale_unite')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+/* ===== CONFLIT : TENSION ARMÉE ===== */
+if (state.scene === "conflit_suite") {
+  show(`
+    <p>
+      Jason perd le contrôle et menace Salim.
+    </p>
+    <p>
+      Nick se met entre le fusil de Jason et Salim pour tenter d'apaiser Jason.
+      Malheureusement, les créatures sont de retour !
+    </p>
+
+    <button onclick="go('calmer_jason')">
+      Calmer Jason
+    </button>
+
+    <button onclick="go('soutenir_nick')">
+      Soutenir Nick
+    </button>
+  `);
+  return;
+}
+
+if (state.scene === "calmer_jason") {
+  qte("jason_vivant", "mort_nick", 1300);
+  return;
+}
+
+if (state.scene === "soutenir_nick") {
+  qte("nick_vivant", "mort_jason", 1300);
+  return;
+}
+
+if (state.scene === "mort_nick") {
+  state.flags.nick_vivant = false;
+  show(`
+    <p>
+      Nick est attaqué par derrière.
+    </p>
+    <p class="death">
+      Il n’a aucune chance. Il meurt egorgé.
+    </p>
+    <button onclick="go('conflit_apres_mort')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+
+if (state.scene === "mort_jason") {
+  state.flags.jason_vivant = false;
+  show(`
+    <p>
+      Jason se sacrifie.
+    </p>
+    <p class="death">
+      Un héros brisé par la colère.
+    </p>
+    <button onclick="go('conflit_apres_mort')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+
+if (state.scene === "jason_vivant" || state.scene === "nick_vivant") {
+  show(`
+    <p>
+      Le groupe avance,
+      divisé mais seul Eric est mort.
+    </p>
+    <button onclick="go('conflit_apres_mort')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+
+if (state.scene === "conflit_apres_mort") {
+  show(`
+    <p>
+      La méfiance est totale.
+    </p>
+    <button onclick="go('branche_finale_conflit')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+/* ===== DÉSESPOIR : DERNIÈRE FUITE ===== */
+if (state.scene === "desespoir_suite") {
+  show(`
+    <p>
+      Les créatures convergent.
+    </p>
+    <p>
+      Quelqu’un doit rester.
+    </p>
+
+    <button onclick="go('sacrifice')">
+      Sacrifier un soldat
+    </button>
+
+    <button onclick="go('fuite_desesperee')">
+      Fuir ensemble
+    </button>
+  `);
+  return;
+}
+
+if (state.scene === "sacrifice") {
+  state.flags.sacrifice = true;
+  show(`
+    <p class="death">
+      Nick attire les monstres.
+    </p>
+    <p>
+      Les cris cessent brutalement. Nick est mort.
+    </p>
+    <button onclick="go('desespoir_apres')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+
+if (state.scene === "fuite_desesperee") {
+  qte("fuite_reussie", "mort_collective_temp", 1300);
+  return;
+}
+
+if (state.scene === "mort_collective_temp") {
+  state.flags.massacre = true;
+  show(`
+    <p class="death">
+      La fuite échoue. Nick, Salim et Jason meurent un par un.
+    </p>
+    <p>
+      L’espoir s’effondre.
+    </p>
+    <button onclick="go('desespoir_apres')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+
+if (state.scene === "fuite_reussie") {
+  show(`
+    <p>
+      Ils survivent…
+      de justesse.
+    </p>
+    <button onclick="go('desespoir_apres')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+
+if (state.scene === "desespoir_apres") {
+  show(`
+    <p>
+      Le destin est presque scellé.
+    </p>
+    <button onclick="go('branche_finale_desespoir')">
+      Continuer
+    </button>
+  `);
+  return;
+}
+if (state.scene === "branche_finale_unite") {
+
+  if (state.flags.eric_vivant && state.flags.salim_vivant) {
+    show(`
+      <h2>FIN — Aube sur le désert</h2>
+
+      <p>
+        Le soleil perce l’horizon.
+      </p>
+      <p>
+        Les créatures disparaissent dans l’ombre.
+      </p>
+      <p>
+        Les survivants émergent ensemble.
+      </p>
+
+      <p class="small">
+        L’unité a vaincu la peur.
+      </p>
+
+      <button onclick="go('menu')">
+        Retour au menu
+      </button>
+    `);
+    return;
+  }
+
+  /* 🟡 FIN DOUCE-AMÈRE */
+  show(`
+    <h2>FIN — Victoire incomplète</h2>
+
+    <p>
+      Le jour se lève.
+    </p>
+    <p>
+      Mais des absents hantent le silence.
+    </p>
+
+    <p class="small">
+      Tous n’ont pas survécu.
+      Mais l’humanité, oui.
+    </p>
+
+    <button onclick="go('menu')">
+      Retour au menu
+    </button>
+  `);
+  return;
+}
+if (state.scene === "branche_finale_conflit") {
+
+  if (!state.flags.jason_vivant || !state.flags.nick_vivant) {
+    show(`
+      <h2>FIN — Fracture</h2>
+
+      <p>
+        Les créatures sont repoussées.
+      </p>
+      <p>
+        Mais le groupe est brisé.
+      </p>
+
+      <p class="small">
+        La méfiance a laissé des cicatrices éternelles.
+      </p>
+
+      <button onclick="go('menu')">
+        Retour au menu
+      </button>
+    `);
+    return;
+  }
+
+  /* 🔴 FIN SOMBRE */
+  show(`
+    <h2>FIN — L’erreur humaine</h2>
+
+    <p>
+      Un coup part trop tard.
+    </p>
+    <p>
+      Le chaos l’emporte.
+    </p>
+
+    <p class="death">
+      Les monstres ne sont pas les seuls ennemis.
+    </p>
+
+    <button onclick="go('menu')">
+      Retour au menu
+    </button>
+  `);
+  return;
+}
+if (state.scene === "branche_finale_desespoir") {
+
+  if (state.flags.massacre) {
+    show(`
+      <h2>FIN — Extinction</h2>
+
+      <p>
+        Les cris s’éteignent un à un.
+      </p>
+      <p>
+        Le silence règne.
+      </p>
+
+      <p class="death">
+        Personne ne ressortira.
+      </p>
+
+      <button onclick="go('menu')">
+        Retour au menu
+      </button>
+    `);
+    return;
+  }
+
+  /* 🕯 FIN SACRIFICE */
+  if (state.flags.sacrifice) {
+    show(`
+      <h2>FIN — Le prix du sang</h2>
+
+      <p>
+        Une vie a permis aux autres de fuir.
+      </p>
+      <p>
+        Le survivant regarde le gouffre derrière lui.
+      </p>
+
+      <p class="small">
+        Le sacrifice ne sera jamais oublié.
+      </p>
+
+      <button onclick="go('menu')">
+        Retour au menu
+      </button>
+    `);
+    return;
+  }
+
+  /* ⚫ FIN DÉSESPOIR TOTAL */
+  show(`
+    <h2>FIN — Sans espoir</h2>
+
+    <p>
+      Ils errent encore.
+    </p>
+    <p>
+      Coincés sous terre.
+    </p>
+
+    <p class="death">
+      La nuit ne finit jamais.
+    </p>
+
+    <button onclick="go('menu')">
+      Retour au menu
+    </button>
+  `);
+  return;
+}
 
 }
 
