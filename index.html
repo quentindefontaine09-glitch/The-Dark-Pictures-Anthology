@@ -89,7 +89,7 @@ function go(scene) {
 // =====================
 function menu() {
   show(`
-    <h1>The Dark Pictures</h1>
+    <h1>Inspiré de l'Univers de Supermassive Games : The Dark Fritures Anthology</h1>
     <button onclick="startCharacter('conrad')">Conrad – Man of Medan (Niv 1)</button>
     <button onclick="startCharacter('andrew')">Andrew – Little Hope (Niv2)</button>
     <button onclick="startCharacter('rachel')">Rachel – House of Ashes (Niv3)</button>
@@ -110,13 +110,13 @@ function startCharacter(char) {
 // =====================
 // QTE SOURIS
 // =====================
-function qte(success, fail, time = 6200) {
+function qte(success, fail, time = 1500) {
   qteSound.currentTime = 0;
   qteSound.play();
 
   const size = 80;
-  const x = (window.innerWidth * 0.25) + Math.random() * (window.innerWidth * 0,5 - size);
-  const y = (window.innerWidth * 0.25) + Math.random() * (window.innerHeight * 0,5 - size);
+  const x = (window.innerWidth * 0.75) + Math.random() * (window.innerWidth * 0,75 - size);
+  const y = (window.innerWidth * 0.75) + Math.random() * (window.innerHeight * 0,75 - size);
 
   show(`
     <p>AGIS VITE</p>
