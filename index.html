@@ -55,23 +55,6 @@ let state = {
   flags: {},
   log: ""
 };
-
-// =====================
-// AUDIO
-// =====================
-const music = new Audio("audio/ambiance.mp3");
-music.loop = true;
-music.volume = 0.4;
-
-const qteSound = new Audio("audio/qte.mp3");
-qteSound.volume = 0.8;
-
-function startMusic() {
-  if (music.paused) {
-    music.play().catch(()=>{});
-  }
-}
-
 // =====================
 // OUTILS
 // =====================
@@ -269,6 +252,7 @@ function stopAmbiance() {
     ambianceAudio.ctx.close();
     ambianceAudio = null;
   }
+  }
   function musicTestMenu() {
   show(`
     <h2>Musique d’ambiance</h2>
@@ -283,9 +267,6 @@ function stopAmbiance() {
     <button onclick="go('menu')">Retour</button>
   `);
 }
-
-}
-
 // =====================
 // HISTOIRES (PLACEHOLDERS)
 // =====================
