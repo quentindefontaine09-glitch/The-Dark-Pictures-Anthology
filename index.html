@@ -94,7 +94,8 @@ function menu() {
     <button onclick="startCharacter('andrew')">Andrew – Little Hope (Niv2)</button>
     <button onclick="startCharacter('rachel')">Rachel – House of Ashes (Niv3)</button>
     <button onclick="startCharacter('kate')">Kate – The Devil In Me (Niv4)</button>
-  `);
+    <button onclick="startCharacter('Menu_Musique')">Menu des musiques</button>
+    <button onclick="startCharacter('Menu_Sauvegarde')">Menu de sauvegarde</button>`);
 }
 
 function startCharacter(char) {
@@ -175,6 +176,8 @@ function play() {
   if (state.character === "andrew") playAndrew();
   if (state.character === "rachel") playRachel();
   if (state.character === "kate") playKate();
+ if (state.character === "Menu_Musique") musicTestMenu();
+  if (state.character === "Menu_Sauvegarde") saveMenu();
 }
 /* =======================
    SAUVEGARDE PAR SCÈNE
@@ -266,6 +269,21 @@ function stopAmbiance() {
     ambianceAudio.ctx.close();
     ambianceAudio = null;
   }
+  function musicTestMenu() {
+  show(`
+    <h2>Musique d’ambiance</h2>
+
+    <button onclick="playAmbiance('medan')">▶ Man of Medan</button>
+    <button onclick="playAmbiance('hope')">▶ Little Hope</button>
+    <button onclick="playAmbiance('ashes')">▶ House of Ashes</button>
+    <button onclick="playAmbiance('devil')">▶ The Devil In Me</button>
+
+    <button onclick="stopAmbiance()">⏹ Stop</button>
+
+    <button onclick="go('menu')">Retour</button>
+  `);
+}
+
 }
 
 // =====================
