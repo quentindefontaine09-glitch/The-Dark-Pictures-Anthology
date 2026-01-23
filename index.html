@@ -1173,7 +1173,7 @@ function playConrad() {
         Garder le contrôle
       </button>
 
-      <button onclick="go('céder_peur')">
+      <button onclick="go('panique_totale')">
         Céder à la peur
       </button>
     `);
@@ -3681,6 +3681,7 @@ if (state.scene === "erin_sauvee") {
     </p>
     <p class="small">
       Elle a deux aiguilles plantées dans les oreilles n’entendra plus jamais correctement.
+      Erin s'enfuit à son tour dans les couloirs de l'hôtel en hurlant, laissant Kate, Mark et Jamie derrière elle.
     </p>
 
     <button onclick="go('apres_piege_erin')">
@@ -3778,8 +3779,6 @@ if (state.scene === "a_suivre_kate_acte_3") {
   return;
 }
 if (state.scene === "debut_chasse") {
-
-  if (!state.flags.erin_vivante) {
     show(`
       <p>
         Le silence est total.
@@ -3797,37 +3796,6 @@ if (state.scene === "debut_chasse") {
     `);
     return;
   }
-
-  show(`
-    <p>
-      Erin chuchote :
-    </p>
-    <p class="small">
-     Erin - « Il est proche… je l’entends. »
-      Mark - "Désolé... j'ai pas pu me retenir, c'est à cause des flageolets de Charlie"
-    </p>
-
-    <button onclick="go('chasse_avec_erin')">
-      Continuer
-    </button>
-  `);
-  return;
-}
-if (state.scene === "chasse_avec_erin") {
-  show(`
-    <p>
-      Erin guide le groupe.
-    </p>
-    <p>
-      Les sons révèlent des passages sûrs.
-    </p>
-
-    <button onclick="go('choix_jamie_chasse')">
-      Continuer
-    </button>
-  `);
-  return;
-}
 if (state.scene === "chasse_sans_erin") {
   show(`
     <p>
@@ -4052,27 +4020,6 @@ if (state.scene === "a_suivre_kate_final") {
   `);
   return;
 }
-if (state.scene === "a_suivre_kate_final") {
-  show(`
-    <p>
-      La dernière porte s’ouvre.
-    </p>
-    <p>
-      Une salle immense.
-    </p>
-    <p>
-      Des écrans partout.
-    </p>
-    <p class="small">
-      Ils ont toujours été observés.
-    </p>
-
-    <button onclick="go('revelation_tueur')">
-      Continuer
-    </button>
-  `);
-  return;
-}
 if (state.scene === "revelation_tueur") {
   show(`
     <p>
@@ -4107,19 +4054,13 @@ if (state.scene === "choix_final_kate") {
       Affronter le tueur
     </button>
 
-    <button onclick="go('kate_fuit')">
+    <button onclick="go('qte_final_mark')">
       Fuir avec Mark
     </button>
   `);
   return;
 }
 if (state.scene === "kate_affronte") {
-
-  if (!state.flags.kate_bravoure) {
-    go("kate_affronte_echec");
-    return;
-  }
-
   show(`
     <p>
       Kate avance.
@@ -4130,32 +4071,6 @@ if (state.scene === "kate_affronte") {
 
     <button onclick="go('qte_final_mark')">
       Continuer
-    </button>
-  `);
-  return;
-}
-if (state.scene === "kate_affronte_echec") {
-  state.flags.mark_vivant = false;
-
-  show(`
-    <h2>FIN — Le mauvais courage</h2>
-
-    <p class="death">
-      Kate hésite.
-    </p>
-    <p>
-      Le piège se déclenche.
-    </p>
-    <p>
-      Mark est empalé par une structure métallique.
-    </p>
-
-    <p class="small">
-      Le courage tardif tue.
-    </p>
-
-    <button onclick="go('menu')">
-      Retour au menu
     </button>
   `);
   return;
